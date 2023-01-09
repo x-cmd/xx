@@ -15,6 +15,6 @@ jobs:
       CONCURRENCY: 10
     steps:
       - name: main
-        uses: x-cmd/action
+        uses: x-cmd/action@main
         with:
           code: x ws xx-release || true
