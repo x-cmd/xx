@@ -1,7 +1,0 @@
-# shellcheck shell=dash
-___x_cmd____main(){
-    local op="$1"; shift
-    case "$op" in
-
-    esac
-}
