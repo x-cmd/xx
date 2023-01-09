@@ -1,0 +1,19 @@
+name: Generate xx-release
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  release-worker:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      git_user: l
+      git_email: l@x-cmd.com
+      CONCURRENCY: 10
+    steps:
+      - name: main
+        uses: x-cmd/action@x0
+        with:
+          code: x ws xx-release || true
