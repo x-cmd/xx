@@ -1,6 +1,17 @@
 
+# gitxxx-sync
+x yanfa vstream x0 | {
+    x job failfast init
+    while read -r repo; do
+        x job failfast put x gitb backup "git@gitee.com:x-bash/$repo" "git@github.com:x-bash/$repo"
+    done | (
+        x job failfast fini
+    )
+}
+
 git clone git@$(x websrc gitdomain):x-cmd/x0
 cd x0
+
 xws xx
 # x websrc gitdomain
 
