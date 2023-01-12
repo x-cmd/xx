@@ -13,6 +13,7 @@ jobs:
       git_user: l
       git_email: l@x-cmd.com
       CONCURRENCY: 10
+      timeout-minutes: 15
     steps:
       - name: main
         uses: x-cmd/action@main
