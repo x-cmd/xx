@@ -8,6 +8,7 @@ on:
 jobs:
   release-worker:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     env:
       ___X_CMD_GHACTION_X: x0
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -15,7 +16,6 @@ jobs:
       git_user: l
       git_email: l@x-cmd.com
       CONCURRENCY: 10
-      timeout-minutes: 15
     steps:
       - name: main
         uses: x-cmd/action@main
