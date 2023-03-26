@@ -1,6 +1,5 @@
 name: Generate xx-release
 on:
-  push:
   workflow_dispatch:
   schedule:
     - cron: '0 5,23 * * *'
