@@ -33,7 +33,7 @@ function work(){
 
         x gitb which x-bash/x-cmd
 
-        x yanfa vstream "x$no" | while read -r mod; do
+        x yanfa vstream "x$no" | sort | while read -r mod; do
             (
                 yy:info "以subtree模式更新模块 $mod"
                 gibpath="$(x gitb which x-bash/${mod})"
