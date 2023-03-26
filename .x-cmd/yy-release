@@ -1,4 +1,6 @@
 
+x log init yy
+
 GIT_DOMAIN=${GIT_DOMAIN:-github.com}
 
 git clone git@${GIT_DOMAIN}:x-cmd/y0
@@ -10,13 +12,15 @@ function prepare_gitb(){
 }
 
 function work(){
+    local no=$1
+    x git clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git"
     (
-        local no=$1
-        x gitb clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git"
-        cd y${no}
+        cd "y${no}"
+        yy:info "正在${PWD}创建目录mod"
         x mkdirp mod
         x yanfa vstream "x$no" | while read -r mod; do
             (
+                yy:info "以subtree模式更新模块 $mod"
                 if [ -d "mod/$mod" ]; then
                     git subtree pull  --prefix="mod/$mod" "git@${GIT_DOMAIN}:x-bash/${mod}.git" main
                 else
