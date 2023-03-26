@@ -1,4 +1,6 @@
 
+set -o
+
 x log init yy
 
 GIT_DOMAIN=${GIT_DOMAIN:-github.com}
