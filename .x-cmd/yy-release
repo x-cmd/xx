@@ -34,3 +34,5 @@ function main(){
         work $i
     done
 }
+
+main
