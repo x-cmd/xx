@@ -1,0 +1,36 @@
+
+GIT_DOMAIN=${GIT_DOMAIN:-github.com}
+
+git clone git@${GIT_DOMAIN}:x-cmd/y0
+
+function prepare_gitb(){
+    x yanfa vstream x0 | while read -r repo; do
+        printf "%s\n" "git@${GIT_DOMAIN}:x-bash/${repo}.git"
+    done | x gitb add
+}
+
+function work(){
+    (
+        local no=$1
+        x gitb clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git"
+        cd y${no}
+        x mkdirp mod
+        x yanfa vstream "x$no" | while read -r mod; do
+            (
+                if [ -d "mod/$mod" ]; then
+                    git subtree pull  --prefix="mod/$mod" "git@${GIT_DOMAIN}:x-bash/${mod}.git" main
+                else
+                    git subtree add   --prefix="mod/$mod" "git@${GIT_DOMAIN}:x-bash/${mod}.git" main
+                fi
+            )
+        done
+        git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
+    )
+}
+
+function main(){
+    prepare_gitb
+    for i in 0 1 7; do
+        work $i
+    done
+}
