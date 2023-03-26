@@ -11,13 +11,24 @@ function prepare_gitb(){
     done | x gitb add
 }
 
+function handle_if_repo_empty(){
+    git checkout -b main
+    touch .gitignore
+    git add .gitignore
+    git commit -m ...
+    x mkdirp mod
+}
+
+
 function work(){
     local no=$1
     x git clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git"
     (
         cd "y${no}"
         yy:info "正在${PWD}创建目录mod"
-        x mkdirp mod
+
+        handle_if_repo_empty
+
         x yanfa vstream "x$no" | while read -r mod; do
             (
                 yy:info "以subtree模式更新模块 $mod"
