@@ -29,13 +29,17 @@ function work(){
 
         handle_if_repo_empty
 
+        x gitb which x-bash/x-cmd
+
         x yanfa vstream "x$no" | while read -r mod; do
             (
                 yy:info "以subtree模式更新模块 $mod"
+                gibpath="$(x gitb which x-bash/${mod})"
+                yy:info "gitb路径 $gibpath"
                 if [ -d "mod/$mod" ]; then
-                    git subtree pull  --prefix="mod/$mod" "git@${GIT_DOMAIN}:x-bash/${mod}.git" main
+                    git subtree pull  --prefix="mod/$mod" "$gibpath"  main
                 else
-                    git subtree add   --prefix="mod/$mod" "git@${GIT_DOMAIN}:x-bash/${mod}.git" main
+                    git subtree add   --prefix="mod/$mod" "$gibpath" main
                 fi
             )
         done
