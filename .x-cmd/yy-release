@@ -43,6 +43,9 @@ function work(){
                 else
                     git subtree add   --prefix="mod/$mod" "$gibpath" main
                 fi
+
+                commit=$(git log -n 1 "mod/$mod" | awk '$0==""{ getline; a=substr($NF, 2, length($NF)-2); print a; }')
+                printf "%s %s main NULL\n" "$commit" "$mod" >>mod.index.txt
             )
         done
         git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
