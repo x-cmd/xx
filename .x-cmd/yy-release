@@ -45,9 +45,13 @@ function work(){
                 fi
 
                 commit=$(git log -n 1 "mod/$mod" | awk '$0==""{ getline; a=substr($NF, 2, length($NF)-2); print a; }')
-                printf "%s %s main NULL\n" "$commit" "$mod" >>mod.index.txt
+                printf "%s %s main NULL\n" "$commit" "$mod" >>../mod.index.txt
             )
         done
+        x rmrf mod.index.txt
+        mv ../mod.index.txt mod.index.txt
+        git add .
+        git commit -m ...
         git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
     )
 }
