@@ -39,12 +39,13 @@ function work(){
                 gibpath="$(x gitb which x-bash/${mod})"
                 yy:info "gitb路径 $gibpath"
                 if [ -d "mod/$mod" ]; then
-                    git subtree pull  --prefix="mod/$mod" "$gibpath" main
+                    git subtree pull  --prefix="mod/$mod" --squash "$gibpath" main
                 else
-                    git subtree add   --prefix="mod/$mod" "$gibpath" main
+                    git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
                 fi
 
-                commit=$(git log -n 1 "mod/$mod" | awk '$0==""{ getline; a=substr($NF, 2, length($NF)-2); print a; }')
+                # commit=$(git log -n 1 "mod/$mod" | awk '$0==""{ getline; a=substr($NF, 2, length($NF)-2); print a; }')
+                commit="$(cd "$gibpath"; git log -n 1 main | awk 'NR==1{ print $2; }')"
                 printf "%s %s main NULL\n" "$commit" "$mod" >>../mod.index.txt
             )
         done
