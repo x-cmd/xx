@@ -1,4 +1,4 @@
-name: Generate yy repo
+name: 用yy生成xx
 on:
   workflow_dispatch:
   schedule:
