@@ -1,6 +1,6 @@
-git clone git@github.com:x-cmd/x7 main
+git clone git@github.com:x-cmd/x7 -b main
 cd x7
-git clone git@github.com:x-cmd/x-cmd main
+git clone git@github.com:x-cmd/x-cmd -b main
 xws fabu-x-cmd x-cmd
 cd x-cmd
 git status -s
