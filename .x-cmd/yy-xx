@@ -1,0 +1,16 @@
+x log init yy
+function work(){
+    local num=$1
+
+    yy:info "正在准备发布 x$num"
+    (
+        git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
+        cd y$num
+        x yanfa yy xx
+    )
+}
+
+for i in 0 1 7; do
+    work "$i"
+done
+
