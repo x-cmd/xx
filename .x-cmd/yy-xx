@@ -1,4 +1,7 @@
 x log init yy
+
+GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
+
 function work(){
     local num=$1
 
