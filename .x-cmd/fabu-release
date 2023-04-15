@@ -1,6 +1,8 @@
 
 # zig and release
 
+x log init fabu
+
 (
 git clone git@github.com:x-cmd/release tgt
 cd tgt/dist
@@ -12,7 +14,7 @@ for i in *; do
     (
         eval "$(curl "https://get.x-cmd.com/${i}")"
         x scotty test || {
-            echo "Test failed for ${i}"
+            fabu:error "Test failed for ${i}"
             exit 1
         }
 
