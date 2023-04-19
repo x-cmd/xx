@@ -1,4 +1,4 @@
-name: 生成yy
+name: 生成x-cmd-advise
 on:
   workflow_dispatch:
   schedule:
