@@ -1,0 +1,17 @@
+
+(
+
+git clone x-cmd-advise/x-cmd-advise
+
+xws all | while read -r repo; do
+    cd x-cmd-advise
+    git subtree add --prefix "src/$repo" git@github.com:x-cmd-advise/$repo master --squash
+done
+
+cd x-cmd-advise
+
+git commit -m ...
+git push
+
+)
+
