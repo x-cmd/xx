@@ -1,4 +1,4 @@
-name: 生成x-cmd-advise
+name: adivse--assemble
 on:
   workflow_dispatch:
   schedule:
