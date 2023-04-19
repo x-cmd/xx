@@ -21,7 +21,7 @@ for i in *; do
     )
 done
 
-find . -name *.yml | x arg1 'x y2j<$1 >${1%.yml}.json'
+find . -name *.yml | x arg1 'x y2j <$1 >${1%.yml}.json'
 
 git commit -m ...
 git push
