@@ -3,6 +3,8 @@
 
 git clone x-cmd-advise/x-cmd-advise
 
+mkdir -p src
+
 xws all | while read -r repo; do
     cd x-cmd-advise
     git subtree add --prefix "src/$repo" --squash git@github.com:x-cmd-advise/$repo main
