@@ -1,4 +1,4 @@
-name: adivse--assemble
+name: advise--assemble
 on:
   workflow_dispatch:
   schedule:
