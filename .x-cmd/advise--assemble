@@ -5,12 +5,10 @@ git clone git@github.com:x-cmd-advise/x-cmd-advise
 
 mkdir -p src
 
+cd x-cmd-advise
 xws all | while read -r repo; do
-    cd x-cmd-advise
     git subtree add --prefix "src/$repo" --squash git@github.com:x-cmd-advise/$repo main
 done
-
-cd x-cmd-advise
 
 git commit -m ...
 git push
