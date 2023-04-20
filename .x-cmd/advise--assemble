@@ -7,7 +7,14 @@ git clone git@github.com:x-cmd-advise/x-cmd-advise
 cd x-cmd-advise
 mkdir -p src
 xws all | while read -r repo; do
-    git subtree add --prefix "src/$repo" --squash git@github.com:x-cmd-advise/$repo main
+    x:info "assemble src/$repo"
+    if [ -d "src/$repo" ]; then
+        git subtree pull --prefix "src/$repo" --squash git@github.com:x-cmd-advise/$repo main || {
+            x:error "Failed to git subtree pull src/$repo"
+        }
+    else
+        git subtree add --prefix "src/$repo" --squash git@github.com:x-cmd-advise/$repo main
+    fi
 done
 
 git commit -m ...
