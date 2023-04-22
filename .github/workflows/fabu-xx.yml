@@ -2,7 +2,7 @@ name: 用yy生成xx
 on:
   workflow_dispatch:
   schedule:
-    - cron: '15 5,23 * * *'
+    - cron: '15 4,10,16,22 * * *'
 
 jobs:
   release-worker:
