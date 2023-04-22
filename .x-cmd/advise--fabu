@@ -23,7 +23,7 @@ xws pub
 #     )
 # done
 
-# find . -name *.yml | x arg1 'x y2j<$1 >${1%.yml}.json'
+find . -name *.yml | x arg1 'x y2j <$1 >${1%.yml}.json; x rmrf $1'
 
 # git commit -m ...
 # git push
