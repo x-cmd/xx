@@ -8,25 +8,5 @@ git clone git@github.com:x-cmd-advise/x-cmd-advise
 cd x-cmd-advise || return
 xws pub
 
-# mkdir -p src
-
-# cd x-cmd-advise
-# git clone git@github.com:x-cmd-advise/advise
-
-# cp -r src advise/src
-
-# cd advise/src
-# for i in *; do
-#     (
-#         cd $i
-#         x rmrf .* LICENSE
-#     )
-# done
-
-# find . -name *.yml | x arg1 'x y2j <$1 >${1%.yml}.json; x rmrf $1'
-
-# git commit -m ...
-# git push
-
 )
 
