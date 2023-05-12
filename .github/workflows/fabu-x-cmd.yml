@@ -1,8 +1,8 @@
 name: x7生成x-cmd
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '15 5,23 * * *'
+  schedule:
+  - cron: '15 5,23 * * *'
 
 jobs:
   release-worker:
