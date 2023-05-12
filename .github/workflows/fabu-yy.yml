@@ -2,7 +2,7 @@ name: 生成yy
 on:
   workflow_dispatch:
   schedule:
-  - croxn: '0 4,10,16,22 * * *'
+  - cron: '0 4,10,16,22 * * *'
 
 jobs:
   release-worker:
