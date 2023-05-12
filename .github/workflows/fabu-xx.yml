@@ -10,11 +10,12 @@ jobs:
     timeout-minutes: 15
     env:
       ___X_CMD_GHACTION_X: x0
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       git_user: l
       git_email: l@x-cmd.com
+      gh_action_next: ""
       CONCURRENCY: 10
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: main
         uses: x-cmd/action@main
