@@ -15,6 +15,7 @@ jobs:
       git_user: l
       git_email: l@x-cmd.com
       CONCURRENCY: 10
+      gh_action_next: fabu-xx.yml
     steps:
       - name: main
         uses: x-cmd/action@main
