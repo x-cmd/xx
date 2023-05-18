@@ -3,9 +3,15 @@
 
 (
 
-git clone git@github.com:x-cmd-advise/x-cmd-advise
+if [ -d x-cmd-advise ]; then
+    cd x-cmd-advise || return
+    git clean -fd
+    git pull
+else
+    git clone git@github.com:x-cmd-advise/x-cmd-advise
+    cd x-cmd-advise || return
+fi
 
-cd x-cmd-advise || return
 xws pub
 
 )

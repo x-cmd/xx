@@ -1,6 +1,8 @@
 name: advise--fabu
 on:
   workflow_dispatch:
+  # schedule:
+  #   - cron: '15 5,23 * * *'
 
 jobs:
   release-worker:
