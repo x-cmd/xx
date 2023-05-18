@@ -22,5 +22,4 @@ jobs:
           code: |
             x ws advise--assemble
             x gh cfg token="$GITHUB_TOKEN"
-            x gh user info
-            x gh action workflow run advise--fabu.yml
+            x gh action workflow run --repo x-cmd/xx advise--fabu.yml
