@@ -20,6 +20,6 @@ jobs:
         uses: x-cmd/action@main
         with:
           code: |
-            x ws advise--assemble
-            x gh cfg token="$GITHUB_TOKEN"
-            x gh action workflow run --repo x-cmd/xx advise--fabu.yml
+            x ws advise--assemble || return
+            x gh cfg token="$GITHUB_TOKEN" || return
+            x gh action workflow run --repo x-cmd/xx advise--fabu.yml || return

@@ -5,9 +5,11 @@
 
 if [ -d x-cmd-advise ]; then
     cd x-cmd-advise || return
+    x:info "更新 x-cmd-advise/x-cmd-advise"
     git clean -fd
     git pull
 else
+    x:info "下载 git@github.com:x-cmd-advise/x-cmd-advise"
     git clone git@github.com:x-cmd-advise/x-cmd-advise
     cd x-cmd-advise || return
 fi

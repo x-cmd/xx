@@ -1,10 +1,10 @@
 
 (
-
+x:info "下载 git@github.com:x-cmd-advise/x-cmd-advise"
 git clone git@github.com:x-cmd-advise/x-cmd-advise
 
 
-cd x-cmd-advise
+cd x-cmd-advise || return
 mkdir -p src
 xws all | while read -r repo; do
     x:info "assemble src/$repo"
@@ -17,6 +17,7 @@ xws all | while read -r repo; do
     fi
 done
 
+x:info "提交并推送 x-cmd-advise/x-cmd-advise"
 git commit -m ...
 git push
 
