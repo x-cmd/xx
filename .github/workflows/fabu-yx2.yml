@@ -20,4 +20,4 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          code: x ws fabu-xx 2 || true
+          code: x ws fabu-yy 2 || true; x ws fabu-xx 2 || true

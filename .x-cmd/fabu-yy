@@ -64,4 +64,8 @@ function main(){
     done
 }
 
-main
+if [ $# -eq 0 ]; then
+    set -- 0 1 6 7
+fi
+
+main "$@"
