@@ -1,4 +1,4 @@
-name: 用yy生成xx
+name: 用yy生成x2
 on:
   workflow_dispatch:
   schedule:
