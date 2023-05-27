@@ -59,8 +59,8 @@ function work(){
 
 function main(){
     prepare_gitb
-    for i in 0 1 7; do
-        work $i
+    for i in "$@"; do
+        work "$i" || exit 1
     done
 }
 
