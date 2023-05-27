@@ -51,6 +51,10 @@ function work(){
         done
         x rmrf mod.index.txt
         mv ../mod.index.txt mod.index.txt
+        [ -f X ] || {
+            yy:info "初始化 X 文件"
+            printf "%s\n" '. "${___X_CMD_ROOT_CODE:-"$___X_CMD_ROOT/v/$___X_CMD_VERSION"}/mod/xrc/latest"' > X
+        }
         git add .
         git commit -m ...
         git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
