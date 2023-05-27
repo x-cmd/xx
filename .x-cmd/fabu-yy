@@ -26,9 +26,6 @@ function handle_if_repo_empty(){
         printf "%s\n" '本项目所有权限为李均豪(Li Junhao, l@x-cmd.com)所有，保留所有权利。
 本项目仅由李均豪访问，如果你意外获得本仓库数据，请马上删除。' > LICENSE
     }
-    [ -f version ] || {
-        printf "%s\n" "___X_CMD_VERSION=y$no" > version
-    }
     [ -f X ] || {
         printf "%s\n" '. "${___X_CMD_ROOT_CODE:-"$___X_CMD_ROOT/v/$___X_CMD_VERSION"}/mod/xrc/latest"' > X
     }
