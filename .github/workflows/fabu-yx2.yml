@@ -1,15 +1,15 @@
 name: 用yy生成x2
 on:
   workflow_dispatch:
-  schedule:
-  - cron: '15 4,10,16,22 * * *'
+  # schedule:
+  # - cron: '15 4,10,16,22 * * *'
 
 jobs:
   release-worker:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      ___X_CMD_GHACTION_X: x0
+      ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       git_user: l
       git_email: l@x-cmd.com
