@@ -19,13 +19,8 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          code: |
-            x ws advise--fabu || true
-            x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
-            x:info "GITHUB_ENV: $GITHUB_ENV"
-            echo "___X_CMD_ROOT_LOG=$___X_CMD_ROOT_LOG" >> $GITHUB_ENV
-            cat "$GITHUB_ENV"
-            export ___X_CMD_ROOT_LOG="$___X_CMD_ROOT_LOG"
+          code: x ws advise--fabu || true
           artifact_name: log
-          artifact_path: ${{ env.___X_CMD_ROOT_LOG }}
+          artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
+
 
