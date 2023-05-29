@@ -19,6 +19,5 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          code: |
-            x ws advise--fabu || true
-            x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
+          code: x ws advise--fabu || true
+
