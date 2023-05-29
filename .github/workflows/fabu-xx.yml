@@ -24,4 +24,4 @@ jobs:
             x ws fabu-xx || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
           artifact_name: log
-          artifact_path: ${{ env.___X_CMD_ROOT_LOG }}
+          artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
