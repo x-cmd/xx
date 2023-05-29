@@ -20,4 +20,9 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          code: x ws fabu-yy 2 || true; x ws fabu-xx 2 || true
+          code: |
+            x ws fabu-yy 2 || true
+            x ws fabu-xx 2 || true
+            x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
+          artifact_name: log
+          artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
