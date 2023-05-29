@@ -21,3 +21,5 @@ jobs:
         uses: x-cmd/action@main
         with:
           code: x ws fabu-xx || true
+          artifact_name: log
+          artifact_path: ${{ env.___X_CMD_ROOT_LOG }}
