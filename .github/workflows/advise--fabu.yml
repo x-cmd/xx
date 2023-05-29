@@ -24,6 +24,7 @@ jobs:
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
             x:info "GITHUB_ENV: $GITHUB_ENV"
             echo "___X_CMD_ROOT_LOG=$___X_CMD_ROOT_LOG" >> $GITHUB_ENV
+            cat "$GITHUB_ENV"
           artifact_name: log
           artifact_path: ${{ env.___X_CMD_ROOT_LOG }}
 
