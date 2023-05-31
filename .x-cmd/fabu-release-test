@@ -5,6 +5,7 @@ x log init fabu
 
 # Maybe just using docker to install and test ...
 # Or provide a test cover more system...
+# Different system
 
 (
 git clone git@github.com:x-cmd/release tgt
