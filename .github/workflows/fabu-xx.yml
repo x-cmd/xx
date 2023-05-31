@@ -1,4 +1,4 @@
-name: 用yy生成xx(x2除外)
+name: yy => xx (exclude x2)
 on:
   workflow_dispatch:
   schedule:

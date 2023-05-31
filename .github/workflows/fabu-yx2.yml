@@ -1,4 +1,4 @@
-name: 用yy生成x2
+name: x-bash => y2 => x2
 on:
   workflow_dispatch:
   # schedule:
