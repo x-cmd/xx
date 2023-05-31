@@ -1,25 +1,10 @@
+# shellcheck shell=dash
 
-# zig and release
-
-x log init fabu
-
-(
-git clone git@github.com:x-cmd/release tgt
-cd tgt/dist
-
-for i in *; do
-    i=${i#.tgz}
-    i=${i$.tar.xz}
-
-    (
-        eval "$(curl "https://get.x-cmd.com/${i}")"
-        x scotty test || {
-            fabu:error "Test failed for ${i}"
-            exit 1
-        }
-
-        x rmrf ~/.x-cmd-root
-    )
-done
-
-)
+git clone git@github.com:x-cmd/release
+cd release
+if xws build; then
+    git add .
+    git commit -m ...
+    git push git@github.com:x-cmd/release main
+    git push git@gitee.com:x-cmd/release main
+fi

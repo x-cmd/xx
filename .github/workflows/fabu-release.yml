@@ -16,4 +16,4 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          code: x ws release || true
+          code: x ws fabu-release || true
