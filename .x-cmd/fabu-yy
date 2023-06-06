@@ -58,8 +58,10 @@ function work(){
                 printf "%s %s main NULL\n" "$commit" "$mod" >>../mod.index.txt
             )
         done
-        x rmrf mod.index.txt
-        mv ../mod.index.txt mod.index.txt
+
+        x rmrf mod.index.txt x-cmd/metadata
+        mkdir -p .x-cmd/metadata
+        mv ../mod.index.txt .x-cmd/metadata/mod.index.txt
         git add .
         git commit -m ...
         git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
