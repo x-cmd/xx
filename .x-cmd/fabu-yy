@@ -59,7 +59,7 @@ function work(){
             )
         done
 
-        x rmrf mod.index.txt x-cmd/metadata
+        x rmrf mod.index.txt .x-cmd/metadata
         mkdir -p .x-cmd/metadata
         mv ../mod.index.txt .x-cmd/metadata/mod.index.txt
         git add .
