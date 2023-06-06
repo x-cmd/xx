@@ -1,4 +1,4 @@
-name: x-bash => y2 => x2
+name: x-bash => yy => xx ( Excluding 2 )
 on:
   workflow_dispatch:
   # schedule:
