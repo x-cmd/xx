@@ -1,0 +1,28 @@
+name: x-bash => y2 => x2
+on:
+  workflow_dispatch:
+  # schedule:
+  # - cron: '15 4,10,16,22 * * *'
+
+jobs:
+  release-worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      ___X_CMD_GHACTION_X: x2
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      git_user: l
+      git_email: l@x-cmd.com
+      gh_action_next: ""
+      CONCURRENCY: 10
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: main
+        uses: x-cmd/action@main
+        with:
+          code: |
+            x ws fabu-yy || true
+            x ws fabu-xx || true
+            x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
+          artifact_name: log
+          artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
