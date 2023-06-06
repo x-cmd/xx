@@ -21,8 +21,8 @@ jobs:
         uses: x-cmd/action@main
         with:
           code: |
-            x ws fabu-yy 0 || true
-            x ws fabu-xx 0 || true
+            x ws fabu-yy || true
+            x ws fabu-xx || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
           artifact_name: log
           artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
