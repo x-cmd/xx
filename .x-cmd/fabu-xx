@@ -9,6 +9,7 @@ function work(){
     (
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
         cd y$num
+        x rmrf version_sum mod.index.txt yy.info.txt xx.info.txt
         x yanfa yy xx
     )
 }
