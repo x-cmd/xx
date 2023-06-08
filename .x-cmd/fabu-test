@@ -1,22 +1,25 @@
-x log init yy
 
+# zig and release
+
+x log init testyy
 GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
 
-function work(){
+function test_yy(){
     local num=$1
 
-    yy:info "正在准备发布 x$num"
+    testyy:info "正在准备测试 y$num"
     (
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
         cd "y$num" || exit
-        x yanfa yy xx
+        x yanfa yy test
     )
 }
+
 
 if [ $# -eq 0 ]; then
     set -- 0 1 6 7
 fi
 
 for i in "$@"; do
-    work "$i" || exit 1
+    test_yy "$i" || exit 1
 done

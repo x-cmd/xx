@@ -9,7 +9,7 @@ x log init fabu
 
 (
 git clone git@github.com:x-cmd/release tgt
-cd tgt/dist
+cd tgt/dist || exit
 
 for i in *; do
     i=${i%.tgz}
