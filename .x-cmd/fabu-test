@@ -6,20 +6,33 @@ GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
 
 function test_yy(){
     local num=$1
+    local test_report=$2
 
     testyy:info "正在准备测试 y$num"
     (
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
         cd "y$num" || exit
-        x yanfa yy test
+        x yanfa yy test "$test_report"
     )
 }
 
+function main(){
+    (
+        if [ -d test-report ]; then
+            x cd test-report
+            git pull origin main
+        else
+            git clone git@github.com:x-cmd/test-report
+        fi
+    )
+
+    local i; for i in "$@"; do
+        test_yy "$i" "${PWD}/test-report" || exit 1
+    done
+}
 
 if [ $# -eq 0 ]; then
     set -- 0 1 6 7
 fi
 
-for i in "$@"; do
-    test_yy "$i" || exit 1
-done
+main "$@"
