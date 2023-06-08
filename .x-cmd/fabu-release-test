@@ -12,8 +12,8 @@ git clone git@github.com:x-cmd/release tgt
 cd tgt/dist
 
 for i in *; do
-    i=${i#.tgz}
-    i=${i$.tar.xz}
+    i=${i%.tgz}
+    i=${i%.tar.xz}
 
     (
         eval "$(curl "https://get.x-cmd.com/${i}")"
