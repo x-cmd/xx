@@ -1,8 +1,8 @@
-name: x-bash ==> yy
+name: test x6 x7
 on:
   workflow_dispatch:
-  schedule:
-  - cron: '0 4,10,16,22 * * *'
+  # schedule:
+  # - cron: '15 4,10,16,22 * * *'
 
 jobs:
   release-worker:
@@ -10,18 +10,18 @@ jobs:
     timeout-minutes: 15
     env:
       ___X_CMD_GHACTION_X: x2
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       git_user: l
       git_email: l@x-cmd.com
+      gh_action_next: ""
       CONCURRENCY: 10
-      gh_action_next: fabu-xx
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: main
         uses: x-cmd/action@main
         with:
           code: |
-            x ws fabu-yy || true
+            x ws fabu-test || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
-          artifact_name: yy-log
+          artifact_name: test-log
           artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
