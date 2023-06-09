@@ -16,6 +16,7 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TEST_REPORT_TOKEN: ${{ secrets.TEST_REPORT_TOKEN}}
     steps:
       - name: main
         uses: x-cmd/action@main
