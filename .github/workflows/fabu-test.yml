@@ -17,6 +17,7 @@ jobs:
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TEST_REPORT_TOKEN: ${{ secrets.TEST_REPORT_TOKEN}}
+      TEST_QYWX_WEBHOOK: ${{ secrets.TEST_QYWX_WEBHOOK}}
     steps:
       - name: main
         uses: x-cmd/action@main
