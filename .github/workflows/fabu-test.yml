@@ -1,4 +1,4 @@
-name: x-bash => yy => xx ( Excluding 2 )
+name: test x6 x7
 on:
   workflow_dispatch:
   # schedule:
@@ -7,7 +7,7 @@ on:
 jobs:
   release-worker:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60
     env:
       ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -16,13 +16,14 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TEST_REPORT_TOKEN: ${{ secrets.TEST_REPORT_TOKEN}}
+      TEST_QYWX_WEBHOOK: ${{ secrets.TEST_QYWX_WEBHOOK}}
     steps:
       - name: main
         uses: x-cmd/action@main
         with:
           code: |
-            x ws fabu-yy || true
-            x ws fabu-xx || true
+            x ws fabu-test || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
-          artifact_name: log-yyxx
+          artifact_name: log-test
           artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT

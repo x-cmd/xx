@@ -1,21 +1,27 @@
 
-(
-git clone git@github.com:x-cmd/release tgt
-cd tgt/dist
+# zig and release
 
-for i in *; do
-    i=${i#.tgz}
-    i=${i$.tar.xz}
+GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
 
+function test_yy(){
+    local num=$1
+    x:info "正在准备测试 y$num"
     (
-        eval "$(curl "https://get.x-cmd.com/${i}")"
-        x scotty test || {
-            echo "Test failed for ${i}"
-            exit 1
-        }
-
-        x rmrf ~/.x-cmd-root
+        git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
+        cd "y$num" || exit
+        x yanfa yy test
     )
-done
+}
 
-)
+function main(){
+
+    local i; for i in "$@"; do
+        test_yy "$i" || exit 1
+    done
+}
+
+if [ $# -eq 0 ]; then
+    set -- 6 7
+fi
+
+main "$@"
