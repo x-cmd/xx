@@ -10,7 +10,7 @@ function test_yy(){
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
         cd "y$num" || exit
         x yanfa yy test
-    )
+    ) &
 }
 
 function main(){
