@@ -16,7 +16,7 @@ function test_yy(){
 function main(){
 
     local i; for i in "$@"; do
-        test_yy "$i" &
+        test_yy "$i" || exit 1
     done
 }
 
