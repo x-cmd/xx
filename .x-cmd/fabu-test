@@ -10,13 +10,13 @@ function test_yy(){
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
         cd "y$num" || exit
         x yanfa yy test
-    ) &
+    )
 }
 
 function main(){
 
     local i; for i in "$@"; do
-        test_yy "$i" || exit 1
+        test_yy "$i" &
     done
 }
 
