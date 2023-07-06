@@ -17,7 +17,12 @@ xws --cat all | while read -r repo; do
     fi
 done
 
+x fsiter src | while read -r l; do
+    xws --cat all | grep -q "^$l$" || x rmrf "src/$l"
+done
+
 x:info "提交并推送 x-cmd-advise/x-cmd-advise"
+git add src
 git commit -m ...
 git push
 
