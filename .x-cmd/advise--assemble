@@ -6,7 +6,7 @@ git clone git@github.com:x-cmd-advise/x-cmd-advise
 
 cd x-cmd-advise || return
 mkdir -p src
-xws all | while read -r repo; do
+xws --cat all | while read -r repo; do
     x:info "assemble src/$repo"
     if [ -d "src/$repo" ]; then
         git subtree pull --prefix "src/$repo" --squash git@github.com:x-cmd-advise/$repo main || {

@@ -21,7 +21,7 @@ function main(){
 }
 
 if [ $# -eq 0 ]; then
-    set -- 6 7
+    set -- 7 6
 fi
 
 main "$@"
