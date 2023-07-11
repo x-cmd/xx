@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      # ___X_CMD_GHACTION_X: x
+      ___X_CMD_GHACTION_X: x2
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITCODE_TOKEN: ${{ secrets.GITCODE_TOKEN_SYNC }}
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
