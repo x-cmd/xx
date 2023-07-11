@@ -22,4 +22,4 @@ jobs:
         with:
           code: |
             x ws advise--assemble || true
-            x ws advise--fabu     || true
+            x ws advise--fabu --auto || true
