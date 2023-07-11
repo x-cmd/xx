@@ -1,8 +1,8 @@
 name: advise--assemble
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 5,23 * * *'
+  # schedule:
+  #   - cron: '0 5,23 * * *'
 
 jobs:
   release-worker:
