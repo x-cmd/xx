@@ -1,8 +1,8 @@
 name: advise--assemble
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 5,23 * * *'
+  schedule:
+    - cron: '0 5,23 * * *'
 
 jobs:
   release-worker:
@@ -20,6 +20,6 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
+            # x ws advise--fabu --auto || true
           code: |
             x ws advise--assemble || true
-            x ws advise--fabu --auto || true
