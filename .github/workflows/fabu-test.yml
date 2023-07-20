@@ -4,7 +4,6 @@ on:
     inputs:
       test_yy_num:
         description: 'Specify the version of yy'
-        required: false
   schedule:
   - cron: '30 10 * * *'
 
