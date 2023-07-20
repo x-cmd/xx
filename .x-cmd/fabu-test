@@ -7,7 +7,7 @@ function test_yy(){
     local num=$1
     x:info "正在准备测试 y$num"
     (
-        git clone "git@${GIT_DOMAIN}:x-cmd/y$num"
+        git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || exit
         cd "y$num" || exit
         x yanfa yy test
     )
@@ -20,7 +20,9 @@ function main(){
     done
 }
 
-if [ $# -eq 0 ]; then
+if [ -n "$test_yy_num" ]; then
+    set -- "$test_yy_num"
+elif [ $# -eq 0 ]; then
     set -- 7 6
 fi
 
