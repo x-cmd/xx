@@ -1,9 +1,6 @@
 name: test x6 x7
 on:
   workflow_dispatch:
-    inputs:
-      test_yy_num:
-        description: 'Specify the version of yy'
   schedule:
   - cron: '30 10 * * *'
 
