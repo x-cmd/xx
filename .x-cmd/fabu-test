@@ -20,8 +20,8 @@ function main(){
     done
 }
 
-if [ -n "$test_yy_num" ]; then
-    set -- "$test_yy_num"
+if [ -n "$test_yy_version" ]; then
+    set -- "$test_yy_version"
 elif [ $# -eq 0 ]; then
     set -- 7 6
 fi

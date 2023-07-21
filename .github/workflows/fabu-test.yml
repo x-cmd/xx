@@ -1,6 +1,10 @@
 name: test x6 x7
 on:
   workflow_dispatch:
+    inputs:
+      test-yy-version:
+        description: 'test yy version'
+        required: false
   schedule:
   - cron: '30 10 * * *'
 
@@ -16,8 +20,9 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TEST_REPORT_TOKEN: ${{ secrets.TEST_REPORT_TOKEN}}
-      TEST_QYWX_WEBHOOK: ${{ secrets.TEST_QYWX_WEBHOOK}}
+      TEST_REPORT_TOKEN: ${{ secrets.TEST_REPORT_TOKEN }}
+      TEST_QYWX_WEBHOOK: ${{ secrets.TEST_QYWX_WEBHOOK }}
+      test_yy_version: ${{ github.event.inputs.test-yy-version }}
     steps:
       - name: main
         uses: x-cmd/action@main
