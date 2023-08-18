@@ -14,7 +14,7 @@ else
     cd x-cmd-advise || return
 fi
 
-xws pub "$@"
+xws fabu "$@"
 
 )
 
