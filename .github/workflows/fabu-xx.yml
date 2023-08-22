@@ -6,12 +6,12 @@ on:
         description: 'version number'
         required: false
   schedule:
-  - cron: '15 4,10,16,22 * * *'
+  - cron: '10 4,10,16,22 * * *'
 
 jobs:
   release-worker:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     env:
       ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
