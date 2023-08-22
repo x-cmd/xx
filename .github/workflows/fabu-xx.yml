@@ -1,6 +1,10 @@
 name: yy => xx (excluding x2)
 on:
   workflow_dispatch:
+    inputs:
+      version-num:
+        description: 'version number'
+        required: false
   schedule:
   - cron: '15 4,10,16,22 * * *'
 
@@ -16,6 +20,7 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      VERSION_NUM: ${{ github.event.inputs.version-num }}
     steps:
       - name: main
         uses: x-cmd/action@main

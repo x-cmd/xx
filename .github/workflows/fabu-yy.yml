@@ -1,6 +1,10 @@
 name: x-bash ==> yy
 on:
   workflow_dispatch:
+    inputs:
+      version-num:
+        description: 'version number'
+        required: false
   schedule:
   - cron: '0 4,10,16,22 * * *'
 
@@ -16,6 +20,7 @@ jobs:
       git_email: l@x-cmd.com
       CONCURRENCY: 10
       gh_action_next: fabu-xx
+      VERSION_NUM: ${{ github.event.inputs.version-num }}
     steps:
       - name: main
         uses: x-cmd/action@main
