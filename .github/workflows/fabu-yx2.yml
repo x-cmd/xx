@@ -25,4 +25,4 @@ jobs:
             x ws fabu-xx 2 || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
           artifact_name: log-yx2
-          artifact_path: ~/.x-cmd.root/local/log/r/DEFAULT
+          artifact_path: ~/.x-cmd.root/local/log
