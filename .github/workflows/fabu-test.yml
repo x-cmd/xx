@@ -6,7 +6,7 @@ on:
         description: 'test yy version'
         required: false
   schedule:
-  - cron: '30 10 * * *'
+  - cron: '40 11 * * *'
 
 jobs:
   release-worker:
