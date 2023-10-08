@@ -5,8 +5,8 @@ on:
       test-yy-version:
         description: 'test yy version'
         required: false
-  # schedule:
-  # - cron: '40 11 * * *'
+  schedule:
+    - cron: '40 11 * * *'
 
 jobs:
   release-worker:
