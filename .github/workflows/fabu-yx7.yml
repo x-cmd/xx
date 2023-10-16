@@ -1,17 +1,13 @@
-name: yy => xx (excluding x2 x7)
+name: x-bash => y7 => x7
 on:
   workflow_dispatch:
-    inputs:
-      version-num:
-        description: 'version number'
-        required: false
   schedule:
-    - cron: '10 4,10,16,22 * * *'
+  - cron: '10 4,10,16,22 * * *'
 
 jobs:
   release-worker:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     env:
       ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -20,13 +16,13 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      VERSION_NUM: ${{ github.event.inputs.version-num }}
     steps:
       - name: main
         uses: x-cmd/action@main
         with:
           code: |
-            x ws fabu-xx || true
+            x ws fabu-yy 7 || true
+            x ws fabu-xx 7 || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
-          artifact_name: log-xx
+          artifact_name: log-yx7
           artifact_path: ~/.x-cmd.root/local/log
