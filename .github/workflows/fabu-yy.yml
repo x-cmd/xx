@@ -5,6 +5,9 @@ on:
       version-num:
         description: 'version number'
         required: false
+      update-mod-list:
+        description: 'update mod list'
+        required: false
   schedule:
     - cron: '0 4,10,16,22 * * *'
 
@@ -20,7 +23,8 @@ jobs:
       git_email: l@x-cmd.com
       CONCURRENCY: 10
       gh_action_next: fabu-xx
-      VERSION_NUM: ${{ github.event.inputs.version-num }}
+      INPUTS_VERSION_NUM: ${{ github.event.inputs.version-num }}
+      INPUTS_UPDATE_MOD_LIST: ${{ github.event.inputs.update-mod-list }}
     steps:
       - name: main
         uses: x-cmd/action@main

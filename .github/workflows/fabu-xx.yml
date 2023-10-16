@@ -20,7 +20,7 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      VERSION_NUM: ${{ github.event.inputs.version-num }}
+      INPUTS_VERSION_NUM: ${{ github.event.inputs.version-num }}
     steps:
       - name: main
         uses: x-cmd/action@main

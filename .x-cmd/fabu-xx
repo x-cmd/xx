@@ -13,7 +13,7 @@ function work(){
     )
 }
 
-[ -z "$VERSION_NUM" ] || set -- "$VERSION_NUM"
+[ -z "$INPUTS_VERSION_NUM" ] || set -- "$INPUTS_VERSION_NUM"
 
 if [ $# -eq 0 ]; then
     set -- 0 1 6

@@ -42,7 +42,14 @@ function work(){
 
         x gitb which x-bash/x-cmd
 
-        x yanfa vstream "x$no" | sort | while read -r mod; do
+        {
+            if [ -z "$INPUTS_UPDATE_MOD_LIST" ]; then
+                x yanfa vstream "x$no"
+            else
+                printf "%s\n" "$INPUTS_UPDATE_MOD_LIST" | sed 's/ /\n/g'
+            fi
+        } | sort | while read -r mod; do
+            [ -n "$mod" ] || continue
             (
                 yy:info "以subtree模式更新模块 $mod"
                 gibpath="$(x gitb which x-bash/${mod})"
@@ -75,7 +82,7 @@ function main(){
     done
 }
 
-[ -z "$VERSION_NUM" ] || set -- "$VERSION_NUM"
+[ -z "$INPUTS_VERSION_NUM" ] || set -- "$INPUTS_VERSION_NUM"
 
 if [ $# -eq 0 ]; then
     set -- 0 1 6

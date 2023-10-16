@@ -5,6 +5,10 @@ on:
       version-num:
         description: 'version number'
         required: false
+      update-mod-list:
+        description: 'update mod list'
+        required: false
+
   # schedule:
   # - cron: '15 4,10,16,22 * * *'
 
@@ -20,7 +24,8 @@ jobs:
       gh_action_next: ""
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      VERSION_NUM: ${{ github.event.inputs.version-num }}
+      INPUTS_VERSION_NUM: ${{ github.event.inputs.version-num }}
+      INPUTS_UPDATE_MOD_LIST: ${{ github.event.inputs.update-mod-list }}
     steps:
       - name: main
         uses: x-cmd/action@main
