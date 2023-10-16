@@ -42,6 +42,7 @@ function work(){
 
         x gitb which x-bash/x-cmd
 
+        x:info "INPUTS_UPDATE_MOD_LIST[$INPUTS_UPDATE_MOD_LIST]"
         {
             if [ -z "$INPUTS_UPDATE_MOD_LIST" ]; then
                 x yanfa vstream "x$no"
