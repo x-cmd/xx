@@ -67,7 +67,6 @@ function work(){
         x yanfa vstream "x$no" | sort | while read -r mod; do
             [ -n "$mod" ] || continue
             (
-                yy:info "以subtree模式更新模块 $mod"
                 gibpath="$(x gitb which x-bash/${mod})"
                 commit="$(cd "$gibpath"; git log -n 1 main | awk 'NR==1{ print $2; }')"
                 printf "%s %s main NULL\n" "$commit" "$mod" >>../mod.index.txt
