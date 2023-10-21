@@ -32,6 +32,54 @@ function handle_if_repo_empty(){
 
 }
 
+function update_mod(){
+    local mod="$1"
+    local gibpath; gibpath="$(x gitb which "x-bash/${mod}")"
+    yy:info "以subtree模式更新模块 $mod"
+    yy:info "gitb路径 $gibpath"
+    if [ -d "mod/$mod" ]; then
+        git subtree pull  --prefix="mod/$mod" --squash "$gibpath" main
+    else
+        git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
+    fi
+}
+
+function update_part(){
+    local modlist="$1"
+    yy:info "更新部分模块 => modlist[$modlist]"
+    local mod; printf "%s\n" "$modlist" | sed 's/ /\n/g' | sort | while read -r mod; do
+        [ -n "$mod" ] || continue
+        update_mod "$mod"
+    done
+
+    modlist=" ${modlist} "
+    local l; local commit;
+    while read -r l; do
+        mod="${l#* }"
+        mod="${mod%% *}"
+        if [ "$modlist" = "${modlist#*" ${mod} "}" ]; then
+            printf "%s\n" "$l" >> ../mod.index.txt
+        else
+            yy:info "update ${mod} ==> mod.index.yml"
+            commit="$(cd "$(x gitb which "x-bash/${mod}")" || return; git log -n 1 main | awk 'NR==1{ print $2; }')"
+            printf "%s %s main NULL\n" "$commit" "$mod" >> ../mod.index.txt
+        fi
+    done < .x-cmd/metadata/mod.index.txt
+}
+
+function update_all(){
+    local no="$1"
+    yy:info "更新所有模块 => x$no"
+
+    local mod; local commit;
+    x yanfa vstream "x$no" | sort | while read -r mod; do
+        [ -n "$mod" ] || continue
+        update_mod "$mod"
+        # commit=$(git log -n 1 "mod/$mod" | awk '$0==""{ getline; a=substr($NF, 2, length($NF)-2); print a; }')
+        commit="$(cd "$(x gitb which "x-bash/${mod}")" || return; git log -n 1 main | awk 'NR==1{ print $2; }')"
+        printf "%s %s main NULL\n" "$commit" "$mod" >> ../mod.index.txt
+    done
+}
 
 function work(){
     local no=$1
@@ -42,36 +90,11 @@ function work(){
 
         x gitb which x-bash/x-cmd
 
-        x:info "INPUTS_UPDATE_MOD_LIST[$INPUTS_UPDATE_MOD_LIST]"
-        {
-            if [ -z "$INPUTS_UPDATE_MOD_LIST" ]; then
-                x yanfa vstream "x$no"
-            else
-                printf "%s\n" "$INPUTS_UPDATE_MOD_LIST" | sed 's/ /\n/g'
-            fi
-        } | sort | while read -r mod; do
-            [ -n "$mod" ] || continue
-            (
-                yy:info "以subtree模式更新模块 $mod"
-                gibpath="$(x gitb which x-bash/${mod})"
-                yy:info "gitb路径 $gibpath"
-                if [ -d "mod/$mod" ]; then
-                    git subtree pull  --prefix="mod/$mod" --squash "$gibpath" main
-                else
-                    git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
-                fi
-            )
-        done
-
-
-        x yanfa vstream "x$no" | sort | while read -r mod; do
-            [ -n "$mod" ] || continue
-            (
-                gibpath="$(x gitb which x-bash/${mod})"
-                commit="$(cd "$gibpath"; git log -n 1 main | awk 'NR==1{ print $2; }')"
-                printf "%s %s main NULL\n" "$commit" "$mod" >>../mod.index.txt
-            )
-        done
+        if [ -z "$INPUTS_UPDATE_MOD_LIST" ]; then
+            update_all "$no"
+        else
+            update_part "$INPUTS_UPDATE_MOD_LIST"
+        fi
 
         x rmrf mod.index.txt .x-cmd/metadata
         mkdir -p .x-cmd/metadata
