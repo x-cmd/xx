@@ -16,7 +16,7 @@ jobs:
     runs-on: self-hosted
     timeout-minutes: 60
     env:
-      ___X_CMD_GHACTION_X: x2
+      # ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       git_user: l
       git_email: l@x-cmd.com
