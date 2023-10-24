@@ -1,22 +1,24 @@
 
 # zig and release
 
-GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
+# GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
+# GIT_DOMAIN=${GIT_DOMAIN:-"github.com"}
 
-function test_yy(){
-    local num=$1
-    x:info "正在准备测试 y$num"
-    (
-        git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || exit
-        cd "y$num" || exit
-        x yanfa yy test
-    )
-}
+# function test_yy(){
+#     [ $# -gt 0 ] || return 1
+#     local version="y${1}"
+#     x:info "正在准备测试 ${version}"
+#     (
+#         git clone "git@${GIT_DOMAIN}:x-cmd/${version}" || return
+#         cd "${version}" || return
+#         x yanfa yy test "x${1}"
+#     )
+# }
 
 function main(){
-
-    local i; for i in "$@"; do
-        test_yy "$i" || exit 1
+    local i=
+    for i in "$@"; do
+        x yanfa yy test "$i" || return 1
     done
 }
 
