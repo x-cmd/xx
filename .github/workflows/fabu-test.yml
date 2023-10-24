@@ -32,8 +32,9 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          runas: runner
           code: |
+            echo "$HOME"
+            echo "------------"
             x ws fabu-test || true
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
           artifact_name: log-test
