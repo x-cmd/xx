@@ -5,10 +5,18 @@ x log init yy
 
 GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
 
-git clone "git@${GIT_DOMAIN}:x-cmd/y0"
+# git clone "git@${GIT_DOMAIN}:x-cmd/y0"
 
 function prepare_gitb(){
-    x yanfa vstream x0 | while read -r repo; do
+    local modlist="$1"
+    {
+        if [ -n "$modlist" ]; then
+            printf "%s\n" "$modlist" | sed 's/ /\n/g'
+        else
+            x yanfa vstream x0
+        fi
+    } | while read -r repo; do
+        [ -n "$repo" ] || continue
         printf "%s\n" "git@${GIT_DOMAIN}:x-bash/${repo}.git"
     done | x gitb add
 }
@@ -106,7 +114,7 @@ function work(){
 }
 
 function main(){
-    prepare_gitb
+    prepare_gitb "$INPUTS_UPDATE_MOD_LIST"
     for i in "$@"; do
         work "$i" || exit 1
     done
