@@ -7,7 +7,7 @@ function work(){
 
     yy:info "正在准备发布 x$num"
     (
-        git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
+        [ -d "y${num}" ] || git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
         cd "y$num" || exit
         x yanfa yy xx
     )
