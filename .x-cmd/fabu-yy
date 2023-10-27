@@ -83,7 +83,7 @@ function update_all(){
 
 function work(){
     local no=$1
-    git clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git" || return
+    x git clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git" || return
     (
         cd "y${no}" || return
         handle_if_repo_empty "$no"
