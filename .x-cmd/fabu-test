@@ -21,7 +21,7 @@ function main(){
 }
 
 if [ -n "$test_yy_version" ]; then
-    set -- "$test_yy_version"
+    eval "set -- $test_yy_version"
 elif [ $# -eq 0 ]; then
     set -- 6 7
 fi

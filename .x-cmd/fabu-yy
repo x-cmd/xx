@@ -83,7 +83,7 @@ function update_all(){
 
 function work(){
     local no=$1
-    x git clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git"
+    git clone "git@${GIT_DOMAIN}:x-cmd/y${no}.git" || return
     (
         cd "y${no}" || return
         handle_if_repo_empty "$no"
@@ -112,7 +112,7 @@ function main(){
     done
 }
 
-[ -z "$INPUTS_VERSION_NUM" ] || set -- "$INPUTS_VERSION_NUM"
+[ -z "$INPUTS_VERSION_NUM" ] || eval "set -- $INPUTS_VERSION_NUM"
 
 if [ $# -eq 0 ]; then
     set -- 0 1 6
