@@ -5,12 +5,16 @@ on:
       test-yy-version:
         description: 'test yy version'
         required: false
+      # XY_TEST_LOCAL_RUN:
+      #   description: 'Whether to test in the current environment'
+      #   required: false
   schedule:
     - cron: '40 11 * * *'
 
 jobs:
   release-worker:
     runs-on: ubuntu-latest
+
     timeout-minutes: 60
     env:
       ___X_CMD_GHACTION_X: x2
@@ -23,6 +27,8 @@ jobs:
       TEST_REPORT_TOKEN: ${{ secrets.TEST_REPORT_TOKEN }}
       TEST_QYWX_WEBHOOK: ${{ secrets.TEST_QYWX_WEBHOOK }}
       test_yy_version: ${{ github.event.inputs.test-yy-version }}
+      XY_TEST_LOCAL_RUN: false
+      # XY_TEST_LOCAL_RUN: ${{ github.event.inputs.XY_TEST_LOCAL_RUN }}
     steps:
       - name: main
         uses: x-cmd/action@main
