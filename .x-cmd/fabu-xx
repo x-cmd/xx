@@ -7,10 +7,12 @@ function work(){
 
     yy:info "正在准备发布 x$num"
     (
-        [ -d "y${num}" ] || git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
+        x rmrf "y${num}"
+        git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
         cd "y$num" || exit
         x yanfa yy xx
     )
+    yy:info "成功发布 x$num"
 }
 
 [ -z "$INPUTS_VERSION_NUM" ] || eval "set -- $INPUTS_VERSION_NUM"
