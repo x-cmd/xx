@@ -1,4 +1,4 @@
-name: x-bash ==> yy
+name: x-bash ==> yy ( Excluding 2 7 )
 on:
   workflow_dispatch:
     inputs:
