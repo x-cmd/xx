@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 15
     env:
       ___X_CMD_GHACTION_X: x2
-      GITHUB_TOKEN: ${{ secrets.TEST_REPORT_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GITCODE_TOKEN: ${{ secrets.GITCODE_TOKEN_SYNC }}
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       git_user: l
