@@ -20,6 +20,6 @@ jobs:
       - name: main
         uses: x-cmd/action@main
         with:
-          code: x ws advise--fabu || true
+          code: x ws advise--fabu
 
 
