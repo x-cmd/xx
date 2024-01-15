@@ -47,6 +47,11 @@ function update_mod(){
     yy:info "gitb路径 $gibpath"
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull"
+        if [ "$mod" = shim ]; then
+            x rmrf "mod/$mod"
+            git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
+            return
+        fi
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash
     else
         yy:info "add - git subtree add"
