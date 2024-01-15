@@ -46,8 +46,11 @@ function update_mod(){
     yy:info "以subtree模式更新模块 $mod"
     yy:info "gitb路径 $gibpath"
     if [ -d "mod/$mod" ]; then
+        yy:info "update - git subtree pull"
+        git fetch
         git subtree pull  --prefix="mod/$mod" --squash "$gibpath" main
     else
+        yy:info "add - git subtree add"
         git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
     fi
 }
