@@ -47,8 +47,7 @@ function update_mod(){
     yy:info "gitb路径 $gibpath"
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull"
-        git subtree merge --prefix="mod/$mod" "$gibpath" main --allow-unrelated-histories
-        git subtree pull  --prefix="mod/$mod" "$gibpath" main
+        git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash
     else
         yy:info "add - git subtree add"
         git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
