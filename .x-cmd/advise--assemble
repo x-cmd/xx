@@ -7,7 +7,7 @@
 
 
     cd x-cmd-advise || return
-    xws assemble
+    x ws assemble
 
 )
 

@@ -12,6 +12,6 @@
 git clone git@$(x websrc gitdomain):x-cmd/x0
 cd x0
 
-xws xx
+x ws xx
 # x websrc gitdomain
 
