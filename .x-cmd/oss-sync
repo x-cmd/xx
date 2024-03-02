@@ -1,13 +1,15 @@
 # shellcheck shell=dash
 
 f_oss_init(){
-    x:info "oss init"
+    x:info "oss init begin"
     local key="${1:?Provide ssh key}"
     local sshdir="$HOME/.ssh"
-    [ -d "$sshdir" ] || return
+    mkdir -p "$sshdir"
+    curl -s https://raw.githubusercontent.com/x-cmd/knownhost/main/dist/all.txt >> "$sshdir/known_hosts"
     [ ! -f "$sshdir/oss_rsa" ] || return 0
     printf "%s\n" "$key" > "$sshdir/oss_rsa"
-    chmod 600 "$sshdir/oss_rsa"
+    chmod 600 "$sshdir/known_hosts" "$sshdir/oss_rsa"
+    x:info "oss init end"
 }
 
 f_oss_sync(){
