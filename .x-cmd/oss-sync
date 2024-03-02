@@ -6,8 +6,9 @@ f_oss_init(){
     local sshdir="$HOME/.ssh"
     mkdir -p "$sshdir"
     [ ! -f "$sshdir/oss_rsa" ] || return 0
+    ssh-keyscan -t rsa world.hub.x-cmd.com >> "$sshdir/known_hosts"
     printf "%s\n" "$key" > "$sshdir/oss_rsa"
-    chmod 600 "$sshdir/oss_rsa"
+    chmod 600 "$sshdir/known_hosts" "$sshdir/oss_rsa"
     x:info "oss init end"
 }
 
