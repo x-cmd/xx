@@ -1,0 +1,22 @@
+# shellcheck shell=dash
+
+f_oss_init(){
+    x:info "oss init"
+    local key="${1:?Provide ssh key}"
+    local sshdir="$HOME/.ssh"
+    [ -d "$sshdir" ] || return
+    [ ! -f "$sshdir/oss_rsa" ] || return 0
+    printf "%s\n" "$key" > "$sshdir/oss_rsa"
+    chmod 600 "$sshdir/oss_rsa"
+}
+
+f_oss_sync(){
+    x:info "oss sync begin"
+    [ -f "$sshdir/oss_rsa" ] || return
+    ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
+        'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws download && x ws upload'
+    x:info "oss sync end"
+}
+
+f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
+f_oss_sync
