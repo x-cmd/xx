@@ -12,6 +12,7 @@ f_oss_init(){
 
 f_oss_sync(){
     x:info "oss sync begin"
+    local sshdir="$HOME/.ssh"
     [ -f "$sshdir/oss_rsa" ] || return
     ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
         'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws download && x ws upload'
