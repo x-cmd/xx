@@ -1,4 +1,4 @@
-name: yy => xx (excluding x2 x7)
+name: oss sync
 on:
   workflow_dispatch:
   # schedule:
