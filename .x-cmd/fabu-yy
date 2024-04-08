@@ -91,7 +91,7 @@ function update_all(){
 
         [ "$modlist" = "${modlist#*"${mod}${___X_CMD_UNSEENCHAR_NEWLINE}"}" ] || continue
         yy:warn "Remove [mod=$mod] form x$no"
-        # [ ! -d "mod/$mod" ] || x rmrf "mod/$mod"
+        [ ! -d "mod/$mod" ] || x rmrf "mod/$mod"
     done
 
     x yanfa vstream "x$no" | sort | while read -r mod; do
