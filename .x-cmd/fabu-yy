@@ -82,6 +82,19 @@ function update_all(){
     yy:info "更新所有模块 => x$no"
 
     local mod; local commit;
+    local modlist; modlist="$(x yanfa vstream "x$no")"
+
+    modlist="${___X_CMD_UNSEENCHAR_NEWLINE}${modlist}${___X_CMD_UNSEENCHAR_NEWLINE}"
+    ___x_cmd_cmds_ls mod | while read -r mod; do
+        [ -n "$mod" ] || continue
+
+        yy:debug "Check [mod=$mod] is in x$no"
+        [ "$modlist" = "${modlist#*"${mod}${___X_CMD_UNSEENCHAR_NEWLINE}"}" ] || {
+            yy:warn "Remove [mod=$mod] form x$no"
+            # [ ! -d "mod/$mod" ] || x rmrf "mod/$mod"
+        }
+    done
+
     x yanfa vstream "x$no" | sort | while read -r mod; do
         [ -n "$mod" ] || continue
         update_mod "$mod"
@@ -89,6 +102,7 @@ function update_all(){
         commit="$(cd "$(x gitb which "x-bash/${mod}")" || return; git log -n 1 main | awk 'NR==1{ print $2; }')"
         printf "%s %s main NULL\n" "$commit" "$mod" >> ../mod.index.txt
     done
+
 }
 
 function work(){
