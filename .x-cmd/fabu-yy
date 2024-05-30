@@ -49,7 +49,7 @@ function update_mod(){
         yy:info "update - git subtree pull"
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
             yy:warn "Update Failed, will be deleted and re-cloned"
-            __x_cmd rmrf "mod/$mod"
+            x rmrf "mod/$mod"
             git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
         }
     else
