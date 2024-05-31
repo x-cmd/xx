@@ -130,6 +130,9 @@ function work(){
         x rmrf mod.index.txt .x-cmd/metadata
         mkdir -p .x-cmd/metadata
         mv ../mod.index.txt .x-cmd/metadata/mod.index.txt
+
+        yy:info "git push x-cmd/y${no}"
+        git status -s
         git add .
         git commit -m ...
         git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
