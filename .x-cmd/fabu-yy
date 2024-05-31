@@ -49,7 +49,7 @@ function update_mod(){
         yy:info "update - git subtree pull"
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
             yy:warn "Update [mod=$mod] failed, will be deleted and re-cloned"
-            git subtree --prefix="mod/$mod" --delete
+            x rmrf "mod/$mod"
             git subtree add --prefix="mod/$mod" --squash "$gibpath" main
         }
     else
@@ -123,12 +123,12 @@ function work(){
             update_part "$INPUTS_UPDATE_MOD_LIST"
         fi
 
-        x rmrf mod.index.txt .x-cmd/metadata
-        mkdir -p .x-cmd/metadata
-        mv ../mod.index.txt .x-cmd/metadata/mod.index.txt
-        git add .
-        git commit -m ...
-        git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
+        # x rmrf mod.index.txt .x-cmd/metadata
+        # mkdir -p .x-cmd/metadata
+        # mv ../mod.index.txt .x-cmd/metadata/mod.index.txt
+        # git add .
+        # git commit -m ...
+        # git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main
     )
 }
 
