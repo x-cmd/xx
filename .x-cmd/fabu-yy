@@ -50,6 +50,8 @@ function update_mod(){
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
             yy:warn "Update [mod=$mod] failed, will be deleted and re-cloned"
             git rm -r "mod/$mod"
+            git add "mod/$mod"
+            git commit -m "reclone mod/$mod"
             git subtree add --prefix="mod/$mod" --squash "$gibpath" main
         }
     else
