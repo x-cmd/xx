@@ -19,7 +19,13 @@ f_oss_sync(){
     ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
         'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws download && x ws upload' || return
     x:info "oss sync end"
+
+    if [ -n "$QYWX_BOT_RELEASE_WEBHOOK" ]; then
+        x qywx --cfg "webhook=$QYWX_BOT_RELEASE_WEBHOOK"
+        x qywx --send --markdown  "### 🔔 已同步 oss"
+    fi
 }
 
 f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
 f_oss_sync
+
