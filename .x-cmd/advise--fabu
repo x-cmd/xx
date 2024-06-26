@@ -14,7 +14,7 @@ else
     cd x-cmd-advise || return
 fi
 
-x ws fabu "$@"
-
+x ws fabu "$@" || return
+x ws oss-sync
 )
 
