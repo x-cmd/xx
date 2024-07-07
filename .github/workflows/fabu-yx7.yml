@@ -28,6 +28,7 @@ jobs:
           code: |
             x ws fabu-yy 7 || true
             x ws fabu-xx 7 || true
+            x gitb sync git@github.com:x-cmd/x7 git@codeberg.org:x-cmd/x7 git@gitee.com:x-cmd/x7
             x:info "___X_CMD_ROOT_LOG: $___X_CMD_ROOT_LOG"
           artifact_name: log-yx7
           artifact_path: ~/.x-cmd.root/local/log
