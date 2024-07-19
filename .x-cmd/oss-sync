@@ -28,5 +28,6 @@ f_oss_sync(){
 }
 
 f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
-f_oss_sync
+
+___x_cmd retry --max 3 --interval 1 f_oss_sync
 
