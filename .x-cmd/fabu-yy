@@ -90,7 +90,7 @@ function update_all(){
     yy:info "更新所有模块 => x$no"
 
     local mod; local commit;
-    local modlist; modlist="$(x yanfa vstream "x$no")"
+    local modlist; modlist="$(x yanfa vstream "x$no")" || return
 
     modlist="${___X_CMD_UNSEENCHAR_NEWLINE}${modlist}${___X_CMD_UNSEENCHAR_NEWLINE}"
     ___x_cmd_cmds_ls mod | while read -r mod; do
@@ -122,9 +122,9 @@ function work(){
         x gitb which x-bash/x-cmd
 
         if [ -z "$INPUTS_UPDATE_MOD_LIST" ]; then
-            update_all "$no"
+            update_all "$no"                            || return
         else
-            update_part "$INPUTS_UPDATE_MOD_LIST"
+            update_part "$INPUTS_UPDATE_MOD_LIST"       || return
         fi
 
         x rmrf mod.index.txt .x-cmd/metadata
