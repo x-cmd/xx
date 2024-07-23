@@ -24,6 +24,7 @@ f_oss_sync(){
         x:info "正在使用 qywx 机器人发送信息"
         x qywx --cfg "webhook=$QYWX_BOT_RELEASE_WEBHOOK"
         x qywx --send --markdown  "### 🔔 已同步 oss"
+        return 0
     fi
 }
 
