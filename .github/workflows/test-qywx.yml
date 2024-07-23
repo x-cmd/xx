@@ -1,0 +1,21 @@
+name: test qywx
+on:
+  workflow_dispatch:
+  # schedule:
+    # - cron: '10 4,10,16,22 * * *'
+
+jobs:
+  release-worker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      ___X_CMD_GHACTION_X: x1
+      ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      OSS_SSH_PRIVATE_KEY: ${{ secrets.OSS_QIAKAI_SSH_PRIVATE_KEY }}
+      QYWX_BOT_RELEASE_WEBHOOK: ${{ secrets.QYWX_BOT_RELEASE_WEBHOOK }}
+    steps:
+      - name: main
+        uses: x-cmd/action@main
+        with:
+          code: |
+            x ws qywx
