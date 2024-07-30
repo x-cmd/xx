@@ -29,29 +29,17 @@ f_oss_advise(){
 
     x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
 
-    x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}"/v0.0.1/                        || return
-    x curl -LO "${advise_url}/v0.0.2/all.tar.xz" > "${advise_dir}"/v0.0.2/                        || return
-    x curl -LO "${advise_url}/v0.0.3/all.tar.xz" > "${advise_dir}"/v0.0.3/                        || return
-    x curl -LO "${completion_url}/v0.0.1/bash-completion.tar.xz" > "${completion_dir}"/v0.0.1/    || return
-    x curl -LO "${completion_url}/v0.0.1/zsh-completion.tar.xz" > "${completion_dir}"/v0.0.1/     || return
+    x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}/v0.0.1/all.tar.xz"    || return
+    x curl -LO "${advise_url}/v0.0.2/all.tar.xz" > "${advise_dir}/v0.0.2/all.tar.xz"    || return
+    x curl -LO "${advise_url}/v0.0.3/all.tar.xz" > "${advise_dir}/v0.0.3/all.tar.xz"    || return
+    x curl -LO "${completion_url}/v0.0.1/bash-completion.tar.xz" > "${completion_dir}"/v0.0.1/bash-completion.tar.xz    || return
+    x curl -LO "${completion_url}/v0.0.1/zsh-completion.tar.xz" > "${completion_dir}"/v0.0.1/zsh-completion.tar.xz     || return
     sync_single_local "x-cmd/advise"
 }
 
-f_oss__all(){
-    f_oss_advise
-    printf "%s" "x-cmd/theme
-        x-cmd/install
-        x-cmd/pkg
-        x-cmd/tldr
-        x-cmd/emoji
-        x-cmd/release
-" | x job foreach -m 3 'sync_single_local $1'|| {
-    x:error "Failed to sync"
-    return 1
-}
-}
 
 sync_single(){
+    x:info "sync_single #[$#] *[$*]"
     case "$1" in
         advise) f_oss_advise ;;
         pkg) sync_single_local "x-cmd/pkg" ;;
