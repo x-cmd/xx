@@ -85,7 +85,7 @@ for name in "$@";do
 done
 
 x:info "Running scp"
-scp  -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  res@world.hub.x-cmd.com:"$HOME"/res/ || return
+scp  -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  'res@world.hub.x-cmd.com:$HOME/res/' || return
 
 ___x_cmd retry --max 3 --interval 1 f_oss_sync
 
