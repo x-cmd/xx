@@ -1,6 +1,10 @@
 name: oss sync scp
 on:
   workflow_dispatch:
+    inputs:
+      sync-item:
+        description: 'sync item'
+        required: false
   # schedule:
     # - cron: '10 4,10,16,22 * * *'
 
@@ -13,6 +17,7 @@ jobs:
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       OSS_SSH_PRIVATE_KEY: ${{ secrets.OSS_QIAKAI_SSH_PRIVATE_KEY }}
       QYWX_BOT_RELEASE_WEBHOOK: ${{ secrets.QYWX_BOT_RELEASE_WEBHOOK }}
+      GITHUB_SYNC: ${{ github.event.inputs.sync-item }} }}
     steps:
       - name: main
         uses: x-cmd/action@main
