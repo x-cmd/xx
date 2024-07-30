@@ -1,0 +1,95 @@
+# shellcheck shell=dash
+WSROOT="$(x wsroot)"
+sync_single_local() {
+    local owner_repo="${1:?Please provide an owner/repo}"
+    local dir="${WSROOT}/data/${owner_repo}"
+    x mkdirp "${dir}"
+    x:info "Syncing $owner_repo, => ${dir}"
+    git clone  https://github.com/"${owner_repo}" "${dir}" || return 1
+}
+
+f_oss_init(){
+    x:info "oss init begin"
+    local key="${1:?Provide ssh key}"
+    local sshdir="$HOME/.ssh"
+    mkdir -p "$sshdir"
+    [ ! -f "$sshdir/oss_rsa" ] || return 0
+    ssh-keyscan -t rsa world.hub.x-cmd.com >> "$sshdir/known_hosts"
+    printf "%s\n" "$key" > "$sshdir/oss_rsa"
+    chmod 600 "$sshdir/known_hosts" "$sshdir/oss_rsa"
+    x:info "oss init end"
+}
+
+f_oss_advise(){
+    local advise_url="https://github.com/x-cmd/advise/releases/download"
+    local advise_dir="${WSROOT}/data/releases/advise"
+
+    local completion_url="https://github.com/x-cmd-build/completion/releases/download"
+    local completion_dir="${WSROOT}/data/releases/completion"
+
+    x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
+
+    x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}"/v0.0.1/                        || return
+    x curl -LO "${advise_url}/v0.0.2/all.tar.xz" > "${advise_dir}"/v0.0.2/                        || return
+    x curl -LO "${advise_url}/v0.0.3/all.tar.xz" > "${advise_dir}"/v0.0.3/                        || return
+    x curl -LO "${completion_url}/v0.0.1/bash-completion.tar.xz" > "${completion_dir}"/v0.0.1/    || return
+    x curl -LO "${completion_url}/v0.0.1/zsh-completion.tar.xz" > "${completion_dir}"/v0.0.1/     || return
+    sync_single_local "x-cmd/advise"
+}
+
+f_oss__all(){
+    f_oss_advise
+    printf "%s" "x-cmd/theme
+        x-cmd/install
+        x-cmd/pkg
+        x-cmd/tldr
+        x-cmd/emoji
+        x-cmd/release
+" | x job foreach -m 3 'sync_single_local $1'|| {
+    x:error "Failed to sync"
+    return 1
+}
+}
+
+sync_single(){
+    case "$1" in
+        advise) f_oss_advise ;;
+        pkg) sync_single_local "x-cmd/pkg" ;;
+        tldr) sync_single_local "x-cmd/tldr" ;;
+        emoji) sync_single_local "x-cmd/emoji" ;;
+        release) sync_single_local "x-cmd/release" ;;
+        *)
+            f_oss_advise
+            printf "%s" "x-cmd/theme
+                x-cmd/install
+                x-cmd/pkg
+                x-cmd/tldr
+                x-cmd/emoji
+                x-cmd/release
+" | x job foreach -m 3 'sync_single_local $1'
+        ;;
+    esac
+}
+
+f_oss_sync(){
+    x:info "oss sync begin"
+    local sshdir="$HOME/.ssh"
+    [ -f "$sshdir/oss_rsa" ] || return
+    ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
+        'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws upload' || return
+    x:info "oss sync end"
+
+    if [ -n "$QYWX_BOT_RELEASE_WEBHOOK" ]; then
+        x:info "正在使用 qywx 机器人发送信息"
+        x qywx --cfg "webhook=$QYWX_BOT_RELEASE_WEBHOOK"
+        x qywx --send --markdown  "### 🔔 已同步 oss"
+        return 0
+    fi
+}
+
+f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
+sync_single "$GITHUB_SYNC"
+scp -r "${WSROOT}"/data  res@world.hub.x-cmd.com:"$HOME"/res/
+
+___x_cmd retry --max 3 --interval 1 f_oss_sync
+
