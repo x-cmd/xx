@@ -90,7 +90,12 @@ f_oss_sync(){
 }
 
 f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
-sync_single "$GITHUB_SYNC"
+[ -z "$GITHUB_SYNC" ] || eval set -- "$GITHUB_SYNC"
+
+for name in "$@";do
+    sync_single "$name"
+done
+
 scp -r "${WSROOT}"/data  res@world.hub.x-cmd.com:"$HOME"/res/
 
 ___x_cmd retry --max 3 --interval 1 f_oss_sync
