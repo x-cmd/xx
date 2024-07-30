@@ -58,6 +58,8 @@ sync_single(){
         tldr) sync_single_local "x-cmd/tldr" ;;
         emoji) sync_single_local "x-cmd/emoji" ;;
         release) sync_single_local "x-cmd/release" ;;
+        install) sync_single_local "x-cmd/install" ;;
+        theme) sync_single_local "x-cmd/theme" ;;
         *)
             f_oss_advise
             printf "%s" "x-cmd/theme
