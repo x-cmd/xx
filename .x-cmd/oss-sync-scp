@@ -31,8 +31,8 @@ f_oss_advise(){
     x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
     x:info --url "${advise_url}/v0.0.1/all.tar.xz" --package "${advise_dir}/v0.0.1/all.tar.xz" oss-advise
 
-    x rmrf "${advise_dir}/v0.0.1/all.tar.xz" "${advise_dir}/v0.0.2/all.tar.xz" "${advise_dir}/v0.0.3/all.tar.xz"
-    x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}/v0.0.1/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.1/all.tar.xz error" log:ret:1
+    f_oss_advise___inner "${advise_url}/v0.0.1/all.tar.xz" "${advise_dir}/v0.0.1/all.tar.xz" || return
+    # x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}/v0.0.1/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.1/all.tar.xz error" log:ret:1
     x curl -LO "${advise_url}/v0.0.2/all.tar.xz" > "${advise_dir}/v0.0.2/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.2/all.tar.xz error" log:ret:1
     x curl -LO "${advise_url}/v0.0.3/all.tar.xz" > "${advise_dir}/v0.0.3/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.3/all.tar.xz error" log:ret:1
     x curl -LO "${completion_url}/v0.0.1/bash-completion.tar.xz" > "${completion_dir}"/v0.0.1/bash-completion.tar.xz    || return
@@ -45,6 +45,21 @@ f_oss_advise(){
     \ls -lah "${completion_dir}"/v0.0.1/zsh-completion.tar.xz
 
     sync_single_local "x-cmd/advise"
+}
+
+f_oss_advise___inner(){
+    local url="$1"
+    local fp="$2"
+    x:info --url "$url" --package "$fp" oss-advise
+    x ensurefp "$fp"
+    local fptmp="${fp}.tmp"
+    x curl -LO "$url" > "$fptmp"    || N=x M="curl advise release error" log:ret:1
+    [ "$(< "$fptmp" wc -l)" -gt 10 ] || {
+        x:error "Error size"
+        \ls -lah "$fptmp"
+        return 1
+    }
+    x mv -f "$fptmp" "$fp"
 }
 
 
