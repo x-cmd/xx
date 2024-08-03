@@ -6,6 +6,7 @@ sync_single_local() {
     x mkdirp "${dir}"
     x:info "Syncing $owner_repo, => ${dir}"
     git clone  https://github.com/"${owner_repo}" "${dir}" || return 1
+    x rmrf "${dir}/.git"
 }
 
 f_oss_init(){
