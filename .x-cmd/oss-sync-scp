@@ -29,12 +29,20 @@ f_oss_advise(){
     local completion_dir="${WSROOT}/data/releases/completion"
 
     x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
+    x:info --advise_url "$advise_url" --advise_dir "$advise_dir" oss-advise
 
     x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}/v0.0.1/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.1/all.tar.xz error" log:ret:1
     x curl -LO "${advise_url}/v0.0.2/all.tar.xz" > "${advise_dir}/v0.0.2/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.2/all.tar.xz error" log:ret:1
     x curl -LO "${advise_url}/v0.0.3/all.tar.xz" > "${advise_dir}/v0.0.3/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.3/all.tar.xz error" log:ret:1
     x curl -LO "${completion_url}/v0.0.1/bash-completion.tar.xz" > "${completion_dir}"/v0.0.1/bash-completion.tar.xz    || return
     x curl -LO "${completion_url}/v0.0.1/zsh-completion.tar.xz" > "${completion_dir}"/v0.0.1/zsh-completion.tar.xz     || return
+
+    \ls -lah "${advise_dir}/v0.0.1/all.tar.xz"
+    \ls -lah "${advise_dir}/v0.0.2/all.tar.xz"
+    \ls -lah "${advise_dir}/v0.0.3/all.tar.xz"
+    \ls -lah "${completion_dir}"/v0.0.1/bash-completion.tar.xz
+    \ls -lah "${completion_dir}"/v0.0.1/zsh-completion.tar.xz
+
     sync_single_local "x-cmd/advise"
 }
 
