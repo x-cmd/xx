@@ -31,12 +31,12 @@ f_oss_advise(){
     x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
 
     f_oss_advise___inner "${advise_url}/v0.0.1/all.tar.xz" "${advise_dir}/v0.0.1/all.tar.xz" || return
-    # x curl -LO "${advise_url}/v0.0.1/all.tar.xz" > "${advise_dir}/v0.0.1/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.1/all.tar.xz error" log:ret:1
-    x curl -LO "${advise_url}/v0.0.2/all.tar.xz" > "${advise_dir}/v0.0.2/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.2/all.tar.xz error" log:ret:1
-    x curl -LO "${advise_url}/v0.0.3/all.tar.xz" > "${advise_dir}/v0.0.3/all.tar.xz"    || N=x M="x curl -LO ${advise_url}/v0.0.3/all.tar.xz error" log:ret:1
-    x curl -LO "${completion_url}/v0.0.1/bash-completion.tar.xz" > "${completion_dir}"/v0.0.1/bash-completion.tar.xz    || return
-    x curl -LO "${completion_url}/v0.0.1/zsh-completion.tar.xz" > "${completion_dir}"/v0.0.1/zsh-completion.tar.xz     || return
-
+    x curl -L "${advise_url}/v0.0.1/all.tar.xz" -o "${advise_dir}"/v0.0.1/                        || N=x M="x curl -LO ${advise_url}/v0.0.1/all.tar.xz error" log:ret:1
+    x curl -L "${advise_url}/v0.0.2/all.tar.xz" -o "${advise_dir}"/v0.0.2/                        || N=x M="x curl -LO ${advise_url}/v0.0.2/all.tar.xz error" log:ret:1
+    x curl -L "${advise_url}/v0.0.3/all.tar.xz" -o "${advise_dir}"/v0.0.3/                        || N=x M="x curl -LO ${advise_url}/v0.0.3/all.tar.xz error" log:ret:1
+    x curl -L "${completion_url}/v0.0.1/bash-completion.tar.xz" -o "${completion_dir}"/v0.0.1/    || return
+    x curl -L "${completion_url}/v0.0.1/zsh-completion.tar.xz" -o "${completion_dir}"/v0.0.1/     || return
+    
     \ls -lah "${advise_dir}/v0.0.1/all.tar.xz"
     \ls -lah "${advise_dir}/v0.0.2/all.tar.xz"
     \ls -lah "${advise_dir}/v0.0.3/all.tar.xz"
