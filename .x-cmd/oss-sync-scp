@@ -52,7 +52,7 @@ f_oss_advise___inner(){
     x:info --url "$url" --package "$fp" oss-advise
     x ensurefp "$fp"
     local fptmp="${fp}.tmp"
-    x curl -LO "$url" > "$fptmp"    || N=x M="curl advise release error" log:ret:1
+    x curl -L "$url" -o "$fptmp"    || N=x M="curl advise release error" log:ret:1
     [ "$(< "$fptmp" wc -l)" -gt 10 ] || {
         x:error "Error size"
         \ls -lah "$fptmp"
