@@ -42,7 +42,7 @@ f_oss_advise(){
 f_oss_advise___inner(){
     local url="$1"
     local fp="$2"
-    x:info --url "$url" --package "$fp" oss-advise
+    x:info --url "$url" -o "$fp" oss-advise
     x ensurefp "$fp"
     local fptmp="${fp}.tmp"
     x curl -L "$url" -o "$fptmp"    || N=x M="curl advise release error" log:ret:1
