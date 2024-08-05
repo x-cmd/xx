@@ -30,18 +30,11 @@ f_oss_advise(){
 
     x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
 
-    f_oss_advise___inner "${advise_url}/v0.0.1/all.tar.xz" "${advise_dir}/v0.0.1/all.tar.xz" || return
-    x curl -L "${advise_url}/v0.0.1/all.tar.xz" -o "${advise_dir}"/v0.0.1/all.tar.xz                        || N=x M="x curl -LO ${advise_url}/v0.0.1/all.tar.xz error" log:ret:1
-    x curl -L "${advise_url}/v0.0.2/all.tar.xz" -o "${advise_dir}"/v0.0.2/all.tar.xz                        || N=x M="x curl -LO ${advise_url}/v0.0.2/all.tar.xz error" log:ret:1
-    x curl -L "${advise_url}/v0.0.3/all.tar.xz" -o "${advise_dir}"/v0.0.3/all.tar.xz                        || N=x M="x curl -LO ${advise_url}/v0.0.3/all.tar.xz error" log:ret:1
-    x curl -L "${completion_url}/v0.0.1/bash-completion.tar.xz" -o "${completion_dir}"/v0.0.1/bash-completion.tar.xz    || return
-    x curl -L "${completion_url}/v0.0.1/zsh-completion.tar.xz" -o "${completion_dir}"/v0.0.1/zsh-completion.tar.xz      || return
-
-    \ls -lah "${advise_dir}/v0.0.1/all.tar.xz"
-    \ls -lah "${advise_dir}/v0.0.2/all.tar.xz"
-    \ls -lah "${advise_dir}/v0.0.3/all.tar.xz"
-    \ls -lah "${completion_dir}"/v0.0.1/bash-completion.tar.xz
-    \ls -lah "${completion_dir}"/v0.0.1/zsh-completion.tar.xz
+    f_oss_advise___inner "${advise_url}/v0.0.1/all.tar.xz"                      "${advise_dir}/v0.0.1/all.tar.xz"   || return
+    f_oss_advise___inner "${advise_url}/v0.0.2/all.tar.xz"                      "${advise_dir}"/v0.0.2/all.tar.xz   || return
+    f_oss_advise___inner "${advise_url}/v0.0.3/all.tar.xz"                      "${advise_dir}"/v0.0.3/all.tar.xz   || return
+    f_oss_advise___inner "${completion_url}/v0.0.1/bash-completion.tar.xz"      "${completion_dir}"/v0.0.1/bash-completion.tar.xz   || return
+    f_oss_advise___inner "${completion_url}/v0.0.1/zsh-completion.tar.xz"       "${completion_dir}"/v0.0.1/zsh-completion.tar.xz    || return
 
     sync_single_local "x-cmd/advise"
 }
@@ -52,7 +45,7 @@ f_oss_advise___inner(){
     x:info --url "$url" --package "$fp" oss-advise
     x ensurefp "$fp"
     local fptmp="${fp}.tmp"
-    x curl -LO "$url" > "$fptmp"    || N=x M="curl advise release error" log:ret:1
+    x curl -L "$url" -o "$fptmp"    || N=x M="curl advise release error" log:ret:1
     [ "$(< "$fptmp" wc -l)" -gt 10 ] || {
         x:error "Error size"
         \ls -lah "$fptmp"
