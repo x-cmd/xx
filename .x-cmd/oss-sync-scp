@@ -58,13 +58,13 @@ f_oss_advise___inner(){
 sync_single(){
     x:info "sync_single #[$#] *[$*]"
     case "$1" in
-        advise) f_oss_advise ;;
-        pkg) sync_single_local "x-cmd/pkg" ;;
-        tldr) sync_single_local "x-cmd/tldr" ;;
-        emoji) sync_single_local "x-cmd/emoji" ;;
-        release) sync_single_local "x-cmd/release" ;;
-        install) sync_single_local "x-cmd/install" ;;
-        theme) sync_single_local "x-cmd/theme" ;;
+        advise)     f_oss_advise ;;
+        pkg)        sync_single_local "x-cmd/pkg" ;;
+        tldr)       sync_single_local "x-cmd/tldr" ;;
+        emoji)      sync_single_local "x-cmd/emoji" ;;
+        release)    sync_single_local "x-cmd/release" ;;
+        install)    sync_single_local "x-cmd/install" ;;
+        theme)      sync_single_local "x-cmd/theme" ;;
         all|"")
             f_oss_advise
             printf "%s" "x-cmd/theme
