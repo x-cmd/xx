@@ -26,6 +26,7 @@ f_oss_advise(){
     local advise_dir="${WSROOT}/data/releases/advise"
 
     local completion_url="https://github.com/x-cmd-build/completion/releases/download"
+    # local completion_url="https://gitcode.net/x-cmd/advise/-/releases/"
     local completion_dir="${WSROOT}/data/releases/completion"
 
     x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
@@ -42,7 +43,7 @@ f_oss_advise(){
 f_oss_advise___inner(){
     local url="$1"
     local fp="$2"
-    x:info --url "$url" -o "$fp" oss-advise
+    x:info --url "$url" --output "$fp" oss-advise
     x ensurefp "$fp"
     local fptmp="${fp}.tmp"
     x curl -L "$url" -o "$fptmp"    || N=x M="curl advise release error" log:ret:1
