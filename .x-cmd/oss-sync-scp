@@ -60,7 +60,11 @@ sync_single(){
     x:info "sync_single #[$#] *[$*]"
     case "$1" in
         advise)     f_oss_advise ;;
-        pkg)        sync_single_local "x-cmd/pkg" ;;
+        pkg)        # sync_single_local "x-cmd/pkg"
+                    x:info "Update x-cmd/pkg"
+                    x gh action workflow run --repo x-cmd/pkg --ref main build.yml
+                    x gh action workflow run --repo x-cmd/pkg --ref main release.yml
+                    ;;
         tldr)       sync_single_local "x-cmd/tldr" ;;
         emoji)      sync_single_local "x-cmd/emoji" ;;
         release)    sync_single_local "x-cmd/release" ;;
