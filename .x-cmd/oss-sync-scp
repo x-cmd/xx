@@ -62,6 +62,7 @@ sync_single(){
         advise)     f_oss_advise ;;
         pkg)        # sync_single_local "x-cmd/pkg"
                     x:info "Update x-cmd/pkg"
+                    [ -z "$GITHUB_TOKEN" ] || x gh --cfg token="$GITHUB_TOKEN"
                     x gh action workflow run --repo x-cmd/pkg --ref main build.yml
                     x gh action workflow run --repo x-cmd/pkg --ref main release.yml
                     ;;
