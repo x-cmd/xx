@@ -15,7 +15,7 @@ jobs:
     env:
       ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GH_QIAKAI_TOKEN }}
       OSS_SSH_PRIVATE_KEY: ${{ secrets.OSS_QIAKAI_SSH_PRIVATE_KEY }}
       QYWX_BOT_RELEASE_WEBHOOK: ${{ secrets.QYWX_BOT_RELEASE_WEBHOOK }}
       GITHUB_SYNC: ${{ github.event.inputs.sync-item }}
