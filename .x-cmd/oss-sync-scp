@@ -89,12 +89,12 @@ sync_single(){
 }
 
 f_oss_sync(){
-    # x:info "oss sync begin"
-    # local sshdir="$HOME/.ssh"
-    # [ -f "$sshdir/oss_rsa" ] || return
-    # ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
-    #     'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws upload' || return
-    # x:info "oss sync end"
+    x:info "oss sync begin"
+    local sshdir="$HOME/.ssh"
+    [ -f "$sshdir/oss_rsa" ] || return
+    ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
+        'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws upload' || return
+    x:info "oss sync end"
 
     if [ -n "$QYWX_BOT_RELEASE_WEBHOOK" ]; then
         x:info "正在使用 qywx 机器人发送信息"
