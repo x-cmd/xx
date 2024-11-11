@@ -46,18 +46,18 @@ function update_mod(){
     yy:info "以subtree模式更新模块 $mod"
     yy:info "gitb路径 $gibpath"
     if [ -d "mod/$mod" ]; then
-        yy:info "update - git subtree pull"
+        yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
             yy:warn "Update [mod=$mod] failed, will be deleted and re-cloned"
             git rm -r "mod/$mod"
             git add "mod/$mod"
             git commit -m "Re-clone: mod/$mod"
             git gc
-            yy:info "Re-add mod/$mod"
+            yy:info "Re-add mod/$mod - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
             git subtree add --prefix="mod/$mod" --squash "$gibpath" main
         }
     else
-        yy:info "add - git subtree add"
+        yy:info "add - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
         git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
     fi
 }
