@@ -143,6 +143,7 @@ function work(){
 function main(){
     prepare_gitb "$INPUTS_UPDATE_MOD_LIST" || {
         yy:error "Fail to prepare gitb"
+        return 1
     }
     for i in "$@"; do
         work "$i" || exit 1
