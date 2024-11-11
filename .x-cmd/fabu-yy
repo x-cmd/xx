@@ -45,6 +45,7 @@ function update_mod(){
     local gibpath; gibpath="$(x gitb which "x-bash/${mod}")"
     yy:info "以subtree模式更新模块 $mod"
     yy:info "gitb路径 $gibpath"
+    [ -n "$gibpath" ] || N=yy M="Not found x-bash/${mod} gitb file path" log:ret:1
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
@@ -67,7 +68,7 @@ function update_part(){
     yy:info "更新部分模块 => modlist[$modlist]"
     local mod; printf "%s\n" "$modlist" | sed 's/ /\n/g' | sort | while read -r mod; do
         [ -n "$mod" ] || continue
-        update_mod "$mod"
+        update_mod "$mod" || return
     done
 
     modlist=" ${modlist} "
@@ -104,7 +105,7 @@ function update_all(){
 
     x yanfa vstream "x$no" | sort | while read -r mod; do
         [ -n "$mod" ] || continue
-        update_mod "$mod"
+        update_mod "$mod" || return
         # commit=$(git log -n 1 "mod/$mod" | awk '$0==""{ getline; a=substr($NF, 2, length($NF)-2); print a; }')
         commit="$(cd "$(x gitb which "x-bash/${mod}")" || return; git log -n 1 main | awk 'NR==1{ print $2; }')"
         printf "%s %s main NULL\n" "$commit" "$mod" >> ../mod.index.txt
@@ -140,7 +141,9 @@ function work(){
 }
 
 function main(){
-    prepare_gitb "$INPUTS_UPDATE_MOD_LIST"
+    prepare_gitb "$INPUTS_UPDATE_MOD_LIST" || {
+        yy:error "Fail to prepare gitb"
+    }
     for i in "$@"; do
         work "$i" || exit 1
     done
