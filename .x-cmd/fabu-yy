@@ -100,7 +100,11 @@ function update_all(){
 
         [ "$modlist" = "${modlist#*"${mod}${___X_CMD_UNSEENCHAR_NEWLINE}"}" ] || continue
         yy:warn "Remove [mod=$mod] form x$no"
-        [ ! -d "mod/$mod" ] || x rmrf "mod/$mod"
+        [ ! -d "mod/$mod" ] || {
+            git rm -r "mod/$mod"
+            git commit -m "Remove: mod/$mod"
+            git gc
+        }
     done
 
     x yanfa vstream "x$no" | sort | while read -r mod; do
