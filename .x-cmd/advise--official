@@ -14,7 +14,7 @@
     repo=y7;
     [ -d y7 ] || x rmrf "$repo"
     command git clone "git@github.com:x-cmd/$repo" || return
-    commit="$( \cd "$repo" && x git meta id )"
+    commit="$( \cd "$repo" && x git meta id )" || return
 
     x ws advise "$repo" "$commit"
 )
