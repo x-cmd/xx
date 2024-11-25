@@ -1,0 +1,21 @@
+
+(
+    if [ -d x-cmd-version ]; then
+        \ cd x-cmd-version || return
+        x:info "更新 x-cmd/x-cmd-version"
+        command git clean -fd
+        command git pull
+    else
+        x:info "下载 git@github.com:x-cmd/x-cmd-version"
+        command git clone git@github.com:x-cmd/x-cmd-version
+        \ cd x-cmd-version || return
+    fi
+
+    repo=y7;
+    [ -d y7 ] || x rmrf "$repo"
+    command git clone "git@github.com:x-cmd/$repo" || return
+    commit="$( \cd "$repo" && x git meta id )"
+
+    x ws advise "$repo" "$commit"
+)
+
