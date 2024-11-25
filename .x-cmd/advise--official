@@ -1,14 +1,14 @@
 
 (
     if [ -d x-cmd-version ]; then
-        \ cd x-cmd-version || return
+        \cd x-cmd-version || return
         x:info "更新 x-cmd/x-cmd-version"
         command git clean -fd
         command git pull
     else
         x:info "下载 git@github.com:x-cmd/x-cmd-version"
         command git clone git@github.com:x-cmd/x-cmd-version
-        \ cd x-cmd-version || return
+        \cd x-cmd-version || return
     fi
 
     repo=y7;
