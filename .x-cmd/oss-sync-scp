@@ -61,13 +61,14 @@ sync_single(){
     case "$1" in
         advise)     f_oss_advise ;;
         pkg)        # sync_single_local "x-cmd/pkg"
-                    x:info "Update x-cmd/pkg"
+                    x:info "Update x-cmd/pkg changelog-release"
                     [ -z "$GITHUB_TOKEN" ] || {
                         x:info "Setting github token"
                         x gh --cfg token="$GITHUB_TOKEN"
                     }
-                    x gh action workflow run --repo x-cmd/pkg --ref main build.yml
-                    x gh action workflow run --repo x-cmd/pkg --ref main release.yml
+                    # x gh action workflow run --repo x-cmd/pkg --ref main build.yml
+                    # x gh action workflow run --repo x-cmd/pkg --ref main release.yml
+                    x gh action workflow run --repo x-cmd/pkg --ref main changelog-release.yml
                     return 1
                     ;;
         tldr)       sync_single_local "x-cmd/tldr" ;;
