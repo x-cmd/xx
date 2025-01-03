@@ -4,14 +4,16 @@ GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
 
 function work(){
     local num=$1
+    local ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=
+    [ "$num" != 7 ] || ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=1
 
     yy:info "正在准备发布 x$num"
     (
-        x rmrf "y${num}"
+        ___x_cmd rmrf "y${num}"
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
         cd "y$num" || exit
-        x yanfa yy xx
-    ) || return
+        ___x_cmd yanfa yy xx
+    ) || return $?
     yy:info "成功发布 x$num"
 }
 
