@@ -8,7 +8,7 @@ function work(){
     INPUTS_PREPARE_EXTMETA_VERSION=" ${INPUTS_PREPARE_EXTMETA_VERSION} "
     [ "$INPUTS_PREPARE_EXTMETA_VERSION" = "${INPUTS_PREPARE_EXTMETA_VERSION#*" ${num} "}" ] || ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=1
 
-    yy:info "正在准备发布 x$num; ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA={$___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA}"
+    yy:info "正在准备发布 x$num; ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=$___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA"
     # (
     #     ___x_cmd rmrf "y${num}"
     #     git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return

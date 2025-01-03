@@ -5,6 +5,9 @@ on:
       version-num:
         description: 'version number'
         required: false
+      prepare_extmeta_version:
+        description: 'prepare extmeta version'
+        required: false
   schedule:
     - cron: '10 4,10,16,22 * * *'
 
@@ -21,6 +24,7 @@ jobs:
       CONCURRENCY: 10
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       INPUTS_VERSION_NUM: ${{ github.event.inputs.version-num }}
+      INPUTS_PREPARE_EXTMETA_VERSION: ${{ github.event.inputs.prepare_extmeta_version }}
     steps:
       - name: main
         uses: x-cmd/action@main
