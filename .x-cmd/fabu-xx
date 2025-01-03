@@ -5,7 +5,8 @@ GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
 function work(){
     local num=$1
     local ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=
-    [ "$num" != 7 ] || ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=1
+    INPUTS_PREPARE_EXTMETA_VERSION=" ${INPUTS_PREPARE_EXTMETA_VERSION} "
+    [ "$INPUTS_PREPARE_EXTMETA_VERSION" = "${INPUTS_PREPARE_EXTMETA_VERSION#*" ${num} "}" ] || ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=1
 
     yy:info "正在准备发布 x$num"
     (
@@ -18,6 +19,7 @@ function work(){
 }
 
 [ -z "$INPUTS_VERSION_NUM" ] || eval "set -- $INPUTS_VERSION_NUM"
+[ -z "$INPUTS_PREPARE_EXTMETA_VERSION" ] || INPUTS_PREPARE_EXTMETA_VERSION=7
 
 if [ $# -eq 0 ]; then
     set -- 0 1 6
