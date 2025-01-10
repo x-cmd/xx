@@ -22,5 +22,6 @@ jobs:
         uses: x-cmd/action@main
         with:
           code: x ws advise--official
-
+          artifact_name: log-advise-offical
+          artifact_path: ~/.x-cmd.root/local/log
 
