@@ -110,7 +110,7 @@ f_oss_sync(){
     fi
 }
 
-f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
+[ -z "$OSS_SSH_PRIVATE_KEY" ] || f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
 [ -z "$GITHUB_SYNC" ] || eval set -- "$GITHUB_SYNC"
 
 for name in "$@";do
