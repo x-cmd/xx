@@ -92,7 +92,7 @@ sync_single(){
 f_oss_sync(){
     [ ! -d "${WSROOT}/data" ] || {
         x:info "Running scp"
-        scp -v -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  'res@world.hub.x-cmd.com:$HOME/res/' || return
+        scp -v -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  'res@world.hub.x-cmd.com:/home/res/res/' || return
 
         x:info "oss sync begin"
         local sshdir="$HOME/.ssh"
