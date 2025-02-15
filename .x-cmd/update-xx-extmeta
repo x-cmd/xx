@@ -16,7 +16,7 @@ function work(){
             return 1
         else
             yy:info "extmeta 有变化"
-            command git status -s extmate
+            command git status -s
             command git add extmate
             command git commit -m "Update: extmate"
             command git push origin main || return $?
