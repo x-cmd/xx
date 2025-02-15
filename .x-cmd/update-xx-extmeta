@@ -1,0 +1,36 @@
+x log init yy
+
+GIT_DOMAIN=${GIT_DOMAIN:-$(x websrc gitdomain)}
+
+function work(){
+    local num=$1
+    yy:info "正在准备更新 x$num extmeta"
+    (
+        ___x_cmd rmrf "x${num}"
+        command git clone "git@${GIT_DOMAIN}:x-cmd/x$num" || return
+        cd "x$num" || exit
+        ___x_cmd yanfa yy xx_prepare_extmeta || return $?
+
+        if [ "$(command git status -s extmate | command wc -l)" -eq 0 ]; then
+            yy:info "extmeta 无变化"
+            return 1
+        else
+            yy:info "extmeta 有变化"
+            command git add extmate
+            command git status -s
+            command git commit -m "Update: extmate"
+            command git push origin main || return $?
+            ___x_cmd gitb sync "git@github.com:x-cmd/x$num" "git@codeberg.org:x-cmd/x$num" "git@gitee.com:x-cmd/x$num"
+        fi
+    ) || return $?
+}
+
+[ -z "$INPUTS_VERSION_NUM" ] || eval "set -- $INPUTS_VERSION_NUM"
+if [ $# -eq 0 ]; then
+    set -- 7
+fi
+
+for i in "$@"; do
+    work "$i" || exit 1
+done
+
