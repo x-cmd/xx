@@ -1,4 +1,4 @@
-name: update xx extmeta (default x7)
+name: update version data
 on:
   workflow_dispatch:
     inputs:
