@@ -7,7 +7,7 @@ fun_update_version_data()(
 
     local version_mode_dir="$WSROOT/mod/version"
     x rmrf "$version_mode_dir"
-    x mkdrip "$version_mode_dir"
+    x mkdirp "$version_mode_dir"
     command git clone "git@github.com:x-bash/version" "$version_mode_dir" || N=x M="Fail to git clone x-bash/version" log:ret:1
     cd "$version_mode_dir" || N=x M="Fail to cd $version_mode_dir" log:ret:1
 
@@ -24,7 +24,7 @@ fun_update_version_data()(
     command git status -s
     command git add "$version_data_dir"
     command git commit -m "update: version data -> [tag=$version_tag] [date=$version_date]"
-    x ws push || N=x M="Cannot push version data" log:ret:1
+    git push || N=x M="Cannot push version data" log:ret:1
 )
 
 fun_update_version_data "$INPUTS_VERSION_TAG"
