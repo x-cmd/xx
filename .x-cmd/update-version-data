@@ -1,0 +1,30 @@
+# shellcheck shell=dash
+
+WSROOT="$(x wsroot)"
+fun_update_version_data()(
+    local version_tag="$1"
+    [ -n "$version_tag" ] || N=x M="Please provide version tag" log:ret:1
+
+    local version_mode_dir="$WSROOT/mod/version"
+    x rmrf "$version_mode_dir"
+    x mkdrip "$version_mode_dir"
+    command git clone "git@github.com:x-bash/version" "$version_mode_dir" || N=x M="Fail to git clone x-bash/version" log:ret:1
+    cd "$version_mode_dir" || N=x M="Fail to cd $version_mode_dir" log:ret:1
+
+    local version_date; version_date="$(x date)"
+    x:info "Update version data -> [tag=$version_tag] [date=$version_date]"
+
+    local version_data_dir="$version_mode_dir/lib/data"
+    local fp_release_tag="$version_data_dir/releasetag"
+    local fp_release_date="$version_data_dir/releasedate"
+    x mkdirp "$version_data_dir"
+    printf "%s\n" "$version_tag"    > "$fp_release_tag"
+    printf "%s\n" "$version_date"   > "$fp_release_date"
+
+    command git status -s
+    command git add "$version_data_dir"
+    command git commit -m "update: version data -> [tag=$version_tag] [date=$version_date]"
+    x ws push || N=x M="Cannot push version data" log:ret:1
+)
+
+fun_update_version_data "$INPUTS_VERSION_TAG"
