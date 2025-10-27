@@ -10,7 +10,7 @@ function work(){
 
     yy:info "正在准备发布 x$num; ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=$___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA"
     (
-        ___x_cmd rmrf "y${num}"
+        ___x_cmd rmrf "y${num}" || return
         git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
         cd "y$num" || exit
         ___x_cmd yanfa yy xx
