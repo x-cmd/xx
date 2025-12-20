@@ -15,7 +15,7 @@ f_oss_init(){
     local sshdir="$HOME/.ssh"
     mkdir -p "$sshdir"
     [ ! -f "$sshdir/oss_rsa" ] || return 0
-    ssh-keyscan -t rsa world.hub.x-cmd.com >> "$sshdir/known_hosts"
+    ssh-keyscan -t rsa "$OSS_SSH_URL" >> "$sshdir/known_hosts"
     printf "%s\n" "$key" > "$sshdir/oss_rsa"
     chmod 600 "$sshdir/known_hosts" "$sshdir/oss_rsa"
     x:info "oss init end"
@@ -92,12 +92,12 @@ sync_single(){
 f_oss_sync(){
     [ ! -d "${WSROOT}/data" ] || {
         x:info "Running scp"
-        scp -v -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  'res@world.hub.x-cmd.com:/home/res/res/' || return
+        scp -v -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  "res@$OSS_SSH_URL:/home/res/res/" || return
 
         x:info "oss sync begin"
         local sshdir="$HOME/.ssh"
         [ -f "$sshdir/oss_rsa" ] || return
-        ssh -i "$sshdir/oss_rsa" res@world.hub.x-cmd.com \
+        ssh -i "$sshdir/oss_rsa" "res@$OSS_SSH_URL" \
             'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws upload' || return
         x:info "oss sync end"
     }
@@ -110,6 +110,7 @@ f_oss_sync(){
     fi
 }
 
+OSS_SSH_URL="${OSS_SSH_URL:-"world.hub.x-cmd.com"}"
 [ -z "$OSS_SSH_PRIVATE_KEY" ] || f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
 [ -z "$GITHUB_SYNC" ] || eval set -- "$GITHUB_SYNC"
 

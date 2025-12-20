@@ -5,6 +5,9 @@ on:
       sync-item:
         description: 'sync item'
         required: false
+      oss-url:
+        description: 'oss url: default: world.hub.x-cmd.com'
+        required: false
   # schedule:
     # - cron: '10 4,10,16,22 * * *'
 
@@ -19,6 +22,7 @@ jobs:
       OSS_SSH_PRIVATE_KEY: ${{ secrets.OSS_QIAKAI_SSH_PRIVATE_KEY }}
       QYWX_BOT_RELEASE_WEBHOOK: ${{ secrets.QYWX_BOT_RELEASE_WEBHOOK }}
       GITHUB_SYNC: ${{ github.event.inputs.sync-item }}
+      OSS_SSH_URL: ${{ github.event.inputs.oss-url }}
     steps:
       - name: main
         uses: x-cmd/action@main
