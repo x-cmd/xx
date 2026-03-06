@@ -157,7 +157,7 @@ function main(){
 [ -z "$INPUTS_VERSION_NUM" ] || eval "set -- $INPUTS_VERSION_NUM"
 
 if [ $# -eq 0 ]; then
-    set -- 0 1 6
+    set -- 0 1 6 7
 fi
 
 main "$@"
