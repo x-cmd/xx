@@ -50,25 +50,28 @@ function update_mod(){
         yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
         git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
             yy:warn "Update [mod=$mod] failed, will be deleted and re-cloned"
-            # 重置 subtree 目录状态（处理冲突和暂存文件）
-            git reset HEAD "mod/$mod" 2>/dev/null || true
-            git checkout -- "mod/$mod" 2>/dev/null || true
-            # 强制删除目录
-            git rm -rf "mod/$mod" || {
-                yy:error "Failed to remove mod/$mod"
-                return 1
-            }
-            git commit -m "Re-clone: mod/$mod" || {
-                yy:error "Failed to commit removal of mod/$mod"
-                return 1
-            }
+            # 中止可能的合并状态并彻底清理
+            git merge --abort 2>/dev/null || true
+            git reset --hard HEAD 2>/dev/null || true
+            # 强制删除目录（包括未跟踪的文件）
+            rm -rf "mod/$mod"
+            git rm -rf "mod/$mod" 2>/dev/null || true
+            # 如果有删除操作需要提交
+            if git diff --cached --quiet 2>/dev/null; then
+                yy:info "No changes to commit after removal"
+            else
+                git commit -m "Re-clone: mod/$mod" || {
+                    yy:error "Failed to commit removal of mod/$mod"
+                    return 1
+                }
+            fi
             git gc
             yy:info "Re-add mod/$mod - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
-            git subtree add --prefix="mod/$mod" --squash "$gibpath" main
+            git subtree add --prefix="mod/$mod" --squash "$gibpath" main || return $?
         }
     else
         yy:info "add - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
-        git subtree add   --prefix="mod/$mod" --squash "$gibpath" main
+        git subtree add --prefix="mod/$mod" --squash "$gibpath" main || return $?
     fi
 }
 
