@@ -1,0 +1,39 @@
+# shellcheck shell=dash
+WSROOT="$(x wsroot)"
+
+f_oss_init(){
+    x:info "oss init begin"
+    local key="${1:?Provide ssh key}"
+    local sshdir="$HOME/.ssh"
+    mkdir -p "$sshdir"
+    [ ! -f "$sshdir/oss_rsa" ] || return 0
+    ssh-keyscan -t rsa "$OSS_SSH_URL" >> "$sshdir/known_hosts"
+    printf "%s\n" "$key" > "$sshdir/oss_rsa"
+    chmod 600 "$sshdir/known_hosts" "$sshdir/oss_rsa"
+    x:info "oss init end"
+}
+
+f_oss_sync(){
+    x:info "Running sync x-cmd/release"
+
+    local sshdir="$HOME/.ssh"
+    [ -f "$sshdir/oss_rsa" ] || return
+    ssh -i "$sshdir/oss_rsa" "res@$OSS_SSH_URL" \
+        'cd $HOME/res && . $HOME/.x-cmd.root/X && x ws download_release && x ws upload' || return
+
+    if [ -n "$QYWX_BOT_RELEASE_WEBHOOK" ]; then
+        x:info "正在使用 qywx 机器人发送信息"
+        x qywx --cfg "webhook=$QYWX_BOT_RELEASE_WEBHOOK"
+        x qywx send --markdown  "### 🔔 ${GITHUB_SYNC} 已同步 oss "
+        return 0
+    fi
+}
+
+(
+
+    OSS_SSH_URL="${OSS_SSH_URL:-"world.hub.x-cmd.com"}"
+    [ -z "$OSS_SSH_PRIVATE_KEY" ] || f_oss_init "$OSS_SSH_PRIVATE_KEY" || return
+
+    f_oss_sync
+)
+

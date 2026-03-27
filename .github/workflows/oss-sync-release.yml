@@ -1,8 +1,10 @@
-name: oss sync
+name: oss sync x-cmd/release
 on:
   workflow_dispatch:
-  # schedule:
-    # - cron: '10 4,10,16,22 * * *'
+    inputs:
+      oss-url:
+        description: 'oss url: default: world.hub.x-cmd.com'
+        required: false
 
 jobs:
   release-worker:
@@ -11,11 +13,13 @@ jobs:
     env:
       ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GH_QIAKAI_TOKEN }}
       OSS_SSH_PRIVATE_KEY: ${{ secrets.OSS_QIAKAI_SSH_PRIVATE_KEY }}
       QYWX_BOT_RELEASE_WEBHOOK: ${{ secrets.QYWX_BOT_RELEASE_WEBHOOK }}
+      OSS_SSH_URL: ${{ github.event.inputs.oss-url }}
     steps:
       - name: main
         uses: x-cmd/action@main
         with:
           code: |
-            x ws oss-sync
+            x ws oss-sync-release
