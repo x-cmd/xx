@@ -12,9 +12,9 @@ function work(){
     (
         # ___x_cmd rmrf "y${num}" || return
         if [ -d "y${num}" ]; then
-            git pull "git@${GIT_DOMAIN}:x-cmd/y$num" || return
+            git pull "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
         else
-            git clone "git@${GIT_DOMAIN}:x-cmd/y$num" || return
+            git clone "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
         fi
         cd "y$num" || exit
         ___x_cmd yanfa yy xx
