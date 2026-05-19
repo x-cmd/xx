@@ -19,7 +19,7 @@ function work(){
             git clone "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
         fi
         yy:info "cd y${num}"
-        cd "y$num" || exit
+        \cd "y$num" || exit
 
         yy:info "x yanfa yy xx"
         ___x_cmd yanfa yy xx
