@@ -12,11 +12,16 @@ function work(){
     (
         # ___x_cmd rmrf "y${num}" || return
         if [ -d "y${num}" ]; then
+            yy:info "git pull git@${GIT_DOMAIN}:x-cmd/y${num}.git main"
             git pull "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
         else
+            yy:info "git clone git@${GIT_DOMAIN}:x-cmd/y${num}.git main"
             git clone "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
         fi
+        yy:info "cd y${num}"
         cd "y$num" || exit
+
+        yy:info "x yanfa yy xx"
         ___x_cmd yanfa yy xx
     ) || return $?
     yy:info "成功发布 x$num"
