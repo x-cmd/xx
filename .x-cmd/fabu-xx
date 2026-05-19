@@ -23,6 +23,8 @@ function work(){
 
         yy:info "x yanfa yy xx"
         ___x_cmd yanfa yy xx || return $?
+
+        yy:info "x gitb sync git@github.com:x-cmd/x$num git@codeberg.org:x-cmd/x$num git@gitee.com:x-cmd/x$num"
         ___x_cmd gitb sync "git@github.com:x-cmd/x$num" "git@codeberg.org:x-cmd/x$num" "git@gitee.com:x-cmd/x$num"
     ) || return $?
     yy:info "成功发布 x$num"
