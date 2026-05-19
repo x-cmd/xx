@@ -16,7 +16,7 @@ function work(){
             git pull "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
         else
             yy:info "git clone git@${GIT_DOMAIN}:x-cmd/y${num}.git main"
-            git clone "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
+            git clone "git@${GIT_DOMAIN}:x-cmd/y${num}.git" || return
         fi
         yy:info "cd y${num}"
         \cd "y$num" || exit
