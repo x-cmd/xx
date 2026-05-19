@@ -11,11 +11,8 @@ function work(){
     yy:info "正在准备发布 x$num; ___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA=$___X_CMD_YANFA_YY_XX_PREPARE_EXTMETA"
     (
         # ___x_cmd rmrf "y${num}" || return
-        if [ -d "y${num}" ]; then
-            yy:info "git pull git@${GIT_DOMAIN}:x-cmd/y${num}.git main"
-            git pull "git@${GIT_DOMAIN}:x-cmd/y${num}.git" main || return
-        else
-            yy:info "git clone git@${GIT_DOMAIN}:x-cmd/y${num}.git main"
+        if [ ! -d "y${num}" ]; then
+            yy:info "git clone git@${GIT_DOMAIN}:x-cmd/y${num}.git"
             git clone "git@${GIT_DOMAIN}:x-cmd/y${num}.git" || return
         fi
         yy:info "cd y${num}"
