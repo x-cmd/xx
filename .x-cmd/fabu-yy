@@ -48,27 +48,43 @@ function update_mod(){
     [ -n "$gibpath" ] || N=yy M="Not found x-bash/${mod} gitb file path" log:ret:1
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
-        git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash || {
+        if git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash; then
+            yy:info "Update [mod=$mod] success"
+        else
             yy:warn "Update [mod=$mod] failed, will be deleted and re-cloned"
-            # 中止可能的合并状态并彻底清理
-            git merge --abort 2>/dev/null || true
-            git reset --hard HEAD 2>/dev/null || true
-            # 强制删除目录（包括未跟踪的文件）
-            rm -rf "mod/$mod"
-            git rm -rf "mod/$mod" 2>/dev/null || true
-            # 如果有删除操作需要提交
-            if git diff --cached --quiet 2>/dev/null; then
-                yy:info "No changes to commit after removal"
-            else
-                git commit -m "Re-clone: mod/$mod" || {
-                    yy:error "Failed to commit removal of mod/$mod"
-                    return 1
-                }
+
+            # HEAD 必须可用
+            if ! git rev-parse --verify HEAD >/dev/null 2>&1; then
+                yy:error "Repository HEAD corrupted"
+                return 1
             fi
-            git gc
+
+            # 清理 subtree pull 残留状态
+            git merge --abort >/dev/null 2>&1 || true
+
+            if ! git reset --hard; then
+                yy:error "git reset --hard failed"
+                return 1
+            fi
+
+            if ! git clean -fd; then
+                yy:error "git clean failed"
+                return 1
+            fi
+
+            # 删除 subtree 目录
+            \rm -rf "mod/$mod"
+            git rm -rf --cached "mod/$mod" >/dev/null 2>&1 || true
+
+            # 再次恢复 index, 避免 rm 导致 index/worktree 不一致
+            git add -A
+
             yy:info "Re-add mod/$mod - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
-            git subtree add --prefix="mod/$mod" --squash "$gibpath" main || return $?
-        }
+            git subtree add --prefix="mod/$mod" --squash "$gibpath" main || {
+                yy:error "git subtree add failed"
+                return 1
+            }
+        fi
     else
         yy:info "add - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
         git subtree add --prefix="mod/$mod" --squash "$gibpath" main || return $?
