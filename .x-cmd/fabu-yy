@@ -52,7 +52,7 @@ function update_mod(){
 
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
-        if x retry -i -m 3 git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash; then
+        if x retry -i 1 -m 3 git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash; then
             yy:info "Update [mod=$mod] success"
         else
             yy:warn "Update [mod=$mod] failed, will be deleted and re-cloned"
