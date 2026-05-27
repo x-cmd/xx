@@ -23,6 +23,9 @@ function prepare_gitb(){
 
 function handle_if_repo_empty(){
     local no="$1"
+    if git rev-parse --verify HEAD >/dev/null 2>&1; then
+        return 0
+    fi
     yy:info "正在初始化${PWD}目录"
     git checkout -b main
     touch .gitignore
@@ -46,6 +49,15 @@ function update_mod(){
     yy:info "以subtree模式更新模块 $mod"
     yy:info "gitb路径 $gibpath"
     [ -n "$gibpath" ] || N=yy M="Not found x-bash/${mod} gitb file path" log:ret:1
+
+    # # 确保工作树干净
+    # if git rev-parse --verify HEAD >/dev/null 2>&1; then
+    #     if ! git diff-index --quiet HEAD --; then
+    #         yy:warn "Working tree not clean, stashing changes"
+    #         git stash push -m "auto-stash before subtree"
+    #     fi
+    # fi
+
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
         if git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash; then
