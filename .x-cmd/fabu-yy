@@ -50,6 +50,14 @@ function update_mod(){
     yy:info "gitb路径 $gibpath"
     [ -n "$gibpath" ] || N=yy M="Not found x-bash/${mod} gitb file path" log:ret:1
 
+    # 确保工作树干净
+    if git rev-parse --verify HEAD >/dev/null 2>&1; then
+        if ! git diff-index --quiet HEAD --; then
+            yy:warn "Working tree not clean, stashing changes"
+            git stash push -m "auto-stash before subtree"
+        fi
+    fi
+
     if [ -d "mod/$mod" ]; then
         yy:info "update - git subtree pull --prefix=\"mod/$mod\" $gibpath main  --squash"
         if x retry -i 1 -m 3 git subtree pull  --prefix="mod/$mod" "$gibpath" main  --squash; then
