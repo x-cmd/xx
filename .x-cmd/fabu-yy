@@ -182,7 +182,7 @@ function work(){
         git status -s
         git add .
         git commit -m ...
-        git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main || return $?
+        x retry -i 1 -m 3  git push "git@${GIT_DOMAIN}:x-cmd/y${no}.git" main || return $?
         yy:info "成功发布 y$no"
     )
 }
