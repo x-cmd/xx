@@ -80,10 +80,12 @@ function update_mod(){
             git add -A
 
             yy:info "Re-add mod/$mod - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
-            git subtree add --prefix="mod/$mod" --squash "$gibpath" main || {
+            if git subtree add --prefix="mod/$mod" --squash "$gibpath" main; then
+                yy:info "Re-add [mod=$mod] success"
+            else
                 yy:error "git subtree add failed"
                 return 1
-            }
+            fi
         fi
     else
         yy:info "add - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"

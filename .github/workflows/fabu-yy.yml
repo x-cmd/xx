@@ -26,6 +26,9 @@ jobs:
       INPUTS_VERSION_NUM: ${{ github.event.inputs.version-num }}
       INPUTS_UPDATE_MOD_LIST: ${{ github.event.inputs.update-mod-list }}
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: main
         uses: x-cmd/action@main
         with:
