@@ -75,14 +75,23 @@ function update_mod(){
             git merge --abort >/dev/null 2>&1 || true
             git rebase --abort >/dev/null 2>&1 || true
 
-            if ! git reset --hard HEAD; then
-                yy:error "git reset --hard failed"
-                return 1
+            # 优先回到 pull/merge 前的 ORIG_HEAD，避免 reset 到不完整的 merge 状态
+            local orig_head
+            if orig_head=$(git rev-parse --verify ORIG_HEAD 2>/dev/null); then
+                git reset --hard "$orig_head"
+            else
+                git reset --hard HEAD
             fi
+            git clean -fdx
 
-            if ! git clean -fdx; then
-                yy:error "git clean failed"
-                return 1
+            # 如果 mod/$mod 在 HEAD 中存在，需要先提交删除，否则 subtree add 会冲突
+            if git ls-tree -d HEAD "mod/$mod" >/dev/null 2>&1; then
+                \rm -rf "mod/$mod"
+                git rm -rf "mod/$mod" >/dev/null 2>&1 || true
+                git commit -m "Remove mod/$mod for re-add" --no-verify
+                git clean -fdx
+            else
+                \rm -rf "mod/$mod"
             fi
 
             # 确认工作区完全干净
@@ -90,10 +99,6 @@ function update_mod(){
                 yy:error "Working tree still dirty after cleanup"
                 return 1
             fi
-
-            # 删除 subtree 目录及 index 中的记录
-            \rm -rf "mod/$mod"
-            git rm -rf --cached "mod/$mod" >/dev/null 2>&1 || true
 
             yy:info "Re-add mod/$mod - git subtree add --prefix=\"mod/$mod\" --squash $gibpath main"
             if git subtree add --prefix="mod/$mod" --squash "$gibpath" main; then
