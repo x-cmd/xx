@@ -23,4 +23,4 @@ jobs:
         uses: x-cmd/action@main
         with:
           code: |
-            OSS_SYNC_NAME='x-cmd/install tsv data' x ws oss-sync-scp install
+            x ws oss-sync-scp install
