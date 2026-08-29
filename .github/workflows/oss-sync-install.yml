@@ -1,28 +1,26 @@
-name: oss sync scp
+name: oss sync x-cmd/release
 on:
+
+
   workflow_dispatch:
-    inputs:
-      sync-item:
-        description: 'sync item'
-        required: false
-  # schedule:
-    # - cron: '10 4,10,16,22 * * *'
+  schedule:
+    # 12:15 UTC daily = 20:15 Asia/Shanghai (UTC+8)
+    - cron: '15 12 * * *'
 
 jobs:
   release-worker:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
     env:
       ___X_CMD_GHACTION_X: x2
       ssh_key: ${{ secrets.SSH_PRIVATE_KEY }}
       GITHUB_TOKEN: ${{ secrets.GH_QIAKAI_TOKEN }}
       OSS_SSH_PRIVATE_KEY: ${{ secrets.OSS_QIAKAI_SSH_PRIVATE_KEY }}
       QYWX_BOT_RELEASE_WEBHOOK: ${{ secrets.QYWX_BOT_RELEASE_WEBHOOK }}
-      GITHUB_SYNC: ${{ github.event.inputs.sync-item }}
       OSS_SSH_URL: ${{ secrets.OSS_URL }}
     steps:
       - name: main
         uses: x-cmd/action@main
         with:
           code: |
-            x ws oss-sync-scp
+            OSS_SYNC_NAME='x-cmd/install tsv data' x ws oss-sync-scp install
