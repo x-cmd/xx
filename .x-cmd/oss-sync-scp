@@ -29,11 +29,12 @@ f_oss_advise(){
     # local completion_url="https://gitcode.net/x-cmd/advise/-/releases/"
     local completion_dir="${WSROOT}/data/releases/completion"
 
-    x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${completion_dir}/v0.0.1/"
+    x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${advise_dir}/v0.0.4/"  "${completion_dir}/v0.0.1/"
 
     f_oss_advise___inner "${advise_url}/v0.0.1/all.tar.xz"                      "${advise_dir}/v0.0.1/all.tar.xz"   || return
     f_oss_advise___inner "${advise_url}/v0.0.2/all.tar.xz"                      "${advise_dir}"/v0.0.2/all.tar.xz   || return
     f_oss_advise___inner "${advise_url}/v0.0.3/all.tar.xz"                      "${advise_dir}"/v0.0.3/all.tar.xz   || return
+    f_oss_advise___inner "${advise_url}/v0.0.4/all.tar.xz"                      "${advise_dir}"/v0.0.4/all.tar.xz   || return
     f_oss_advise___inner "${completion_url}/v0.0.1/bash-completion.tar.xz"      "${completion_dir}"/v0.0.1/bash-completion.tar.xz   || return
     f_oss_advise___inner "${completion_url}/v0.0.1/zsh-completion.tar.xz"       "${completion_dir}"/v0.0.1/zsh-completion.tar.xz    || return
 
