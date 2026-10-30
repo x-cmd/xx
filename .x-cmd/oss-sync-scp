@@ -5,7 +5,7 @@ sync_single_local() {
     local dir="${WSROOT}/data/${owner_repo}"
     x mkdirp "${dir}"
     x:info "Syncing $owner_repo, => ${dir}"
-    git clone  https://github.com/"${owner_repo}" "${dir}" || return 1
+    git clone --depth 1 https://github.com/"${owner_repo}" "${dir}" || return 1
     x rmrf "${dir}/.git"
 }
 
@@ -113,8 +113,8 @@ sync_single(){
 
 f_oss_sync(){
     [ ! -d "${WSROOT}/data" ] || {
-        x:info "Running scp"
-        scp -v -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}"/data  "res@$OSS_SSH_URL:/home/res/res/" || return
+        x:info "Running rsync"
+        rsync -az --delete -e "ssh -i $HOME/.ssh/oss_rsa" "${WSROOT}/data/" "res@$OSS_SSH_URL:/home/res/res/data/" || return
 
         x:info "oss sync begin"
         local sshdir="$HOME/.ssh"
