@@ -21,22 +21,51 @@ f_oss_init(){
     x:info "oss init end"
 }
 
-f_oss_advise(){
+f_oss_advise_latest(){
+    local advise_api="https://api.github.com/repos/x-cmd/advise/releases/latest"
     local advise_url="https://github.com/x-cmd/advise/releases/download"
     local advise_dir="${WSROOT}/data/releases/advise"
 
-    local completion_url="https://github.com/x-cmd-build/completion/releases/download"
-    # local completion_url="https://gitcode.net/x-cmd/advise/-/releases/"
-    local completion_dir="${WSROOT}/data/releases/completion"
+    x:info "Fetching latest advise release info"
+    local latest_json
+    if [ -n "$GITHUB_TOKEN" ]; then
+        latest_json="$(x curl -sL -H "Authorization: Bearer ${GITHUB_TOKEN}" "${advise_api}")" || {
+            x:error "Failed to fetch latest advise release info"
+            return 1
+        }
+    else
+        latest_json="$(x curl -sL "${advise_api}")" || {
+            x:error "Failed to fetch latest advise release info"
+            return 1
+        }
+    fi
 
-    x mkdirp "${advise_dir}/v0.0.1/" "${advise_dir}/v0.0.2/" "${advise_dir}/v0.0.3/" "${advise_dir}/v0.0.4/"  "${completion_dir}/v0.0.1/"
+    local tag
+    tag="$(printf '%s' "${latest_json}" | x jq -r '.tag_name // empty')"
+    if [ -z "${tag}" ]; then
+        x:error "Failed to parse latest advise release tag: $(printf '%s' "${latest_json}" | head -c 300)"
+        return 1
+    fi
+    x:info "Latest advise release: ${tag}"
 
-    f_oss_advise___inner "${advise_url}/v0.0.1/all.tar.xz"                      "${advise_dir}/v0.0.1/all.tar.xz"   || return
-    f_oss_advise___inner "${advise_url}/v0.0.2/all.tar.xz"                      "${advise_dir}"/v0.0.2/all.tar.xz   || return
-    f_oss_advise___inner "${advise_url}/v0.0.3/all.tar.xz"                      "${advise_dir}"/v0.0.3/all.tar.xz   || return
-    f_oss_advise___inner "${advise_url}/v0.0.4/all.tar.xz"                      "${advise_dir}"/v0.0.4/all.tar.xz   || return
-    f_oss_advise___inner "${completion_url}/v0.0.1/bash-completion.tar.xz"      "${completion_dir}"/v0.0.1/bash-completion.tar.xz   || return
-    f_oss_advise___inner "${completion_url}/v0.0.1/zsh-completion.tar.xz"       "${completion_dir}"/v0.0.1/zsh-completion.tar.xz    || return
+    # 删除本地旧版本目录，rsync --delete 会同步删除远端旧版本
+    if [ -d "${advise_dir}" ]; then
+        local d
+        for d in "${advise_dir}"/*; do
+            [ -d "$d" ] || continue
+            if [ "$d" != "${advise_dir}/${tag}" ]; then
+                x:info "Removing old advise release: ${d}"
+                x rmrf "${d}"
+            fi
+        done
+    fi
+
+    x mkdirp "${advise_dir}/${tag}/"
+
+    printf '%s' "${latest_json}" | x jq -r '.assets[]?.name' | while read -r name; do
+        [ -n "${name}" ] || continue
+        f_oss_advise___inner "${advise_url}/${tag}/${name}" "${advise_dir}/${tag}/${name}" || exit 1
+    done || return 1
 
     sync_single_local "x-cmd/advise"
 }
@@ -82,7 +111,7 @@ f_oss_install(){
 sync_single(){
     x:info "sync_single #[$#] *[$*]"
     case "$1" in
-        advise)     f_oss_advise ;;
+        advise)     f_oss_advise_latest ;;
         pkg)        # sync_single_local "x-cmd/pkg"
                     x:info "Update x-cmd/pkg changelog-release"
                     [ -z "$GITHUB_TOKEN" ] || {
@@ -100,7 +129,7 @@ sync_single(){
         install)    f_oss_install ;;
         theme)      sync_single_local "x-cmd/theme" ;;
         all|"")
-            f_oss_advise
+            f_oss_advise_latest
             printf "%s" "x-cmd/theme
                 x-cmd/pkg
                 x-cmd/tldr
