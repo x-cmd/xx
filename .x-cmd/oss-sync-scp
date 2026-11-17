@@ -48,18 +48,6 @@ f_oss_advise_latest(){
     fi
     x:info "Latest advise release: ${tag}"
 
-    # 删除本地旧版本目录，rsync --delete 会同步删除远端旧版本
-    if [ -d "${advise_dir}" ]; then
-        local d
-        for d in "${advise_dir}"/*; do
-            [ -d "$d" ] || continue
-            if [ "$d" != "${advise_dir}/${tag}" ]; then
-                x:info "Removing old advise release: ${d}"
-                x rmrf "${d}"
-            fi
-        done
-    fi
-
     x mkdirp "${advise_dir}/${tag}/"
 
     printf '%s' "${latest_json}" | x jq -r '.assets[]?.name' | while read -r name; do
@@ -143,8 +131,8 @@ sync_single(){
 
 f_oss_sync(){
     [ ! -d "${WSROOT}/data" ] || {
-        x:info "Running rsync"
-        rsync -az --delete -e "ssh -i $HOME/.ssh/oss_rsa" "${WSROOT}/data/" "res@$OSS_SSH_URL:/home/res/res/data/" || return
+        x:info "Running scp"
+        scp -i "$HOME/.ssh/oss_rsa" -r "${WSROOT}/data" "res@$OSS_SSH_URL:/home/res/res/" || return
 
         x:info "oss sync begin"
         local sshdir="$HOME/.ssh"
