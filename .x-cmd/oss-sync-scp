@@ -76,9 +76,10 @@ f_oss_advise___inner(){
     x:info --url "$url" --output "$fp" oss-advise
     x ensurefp "$fp"
     local fptmp="${fp}.tmp"
-    x curl -L "$url" -o "$fptmp"    || N=x M="curl advise release error" log:ret:1
-    [ "$(< "$fptmp" wc -l)" -gt 10 ] || {
-        x:error "Error size"
+    local code
+    code="$(x curl -L -sS -o "$fptmp" -w '%{http_code}' "$url")" || N=x M="curl advise release error" log:ret:1
+    [ "$code" = "200" ] || {
+        x:error "Download failed, HTTP ${code}: ${url}"
         \ls -lah "$fptmp"
         return 1
     }
